@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500&display=swap" rel="stylesheet">
+    <title>Tableritos</title>
+</head>
+
+<body class="font-overpass">
+    <main class="flex justify-center">
+
+        <div class="w-360 mt-2 mb-2 md:w-760 md:flex md:justify-between lg:w-1000">
+
+            <!--Tableros-->
+            <section class="w-360 flex flex-wrap">
+
+                <div class=" w-full h-28 pt-5 rounded-t-lg bg-gradient-to-t from-violet-300 to-sky-300">
+                    <h1 class="text-center text-4xl text-slate-100 font-bold">Tableritos</h1>
+                    <input class="ml-3 mt-2 w-72 h-8 p-2 text-lg text-gray-800 placeholder:text-slate-100 bg-transparent"
+                        type="text" placeholder="Título del tablero">
+                    <button class=" w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2"> +
+                    </button>
+                </div>
+
+                <ul class="w-full h-64 pb-10 overflow-y-scroll  rounded-b-lg border-solid border-slate-100 border-2 md:h-648">
+                    <li class="flex justify-center">
+                        <button
+                            class="w-300 h-16 border-solid border-violet-300 border-b-2 bg-white text-gray-800">Título de tablero</button>
+                    </li>
+
+                </ul>
+            </section>
+
+            <!--Tablero seleccionado-->
+            <section
+                class="mt-5 pt-5 pb-5 w-360 flex flex-wrap justify-center rounded-md border-solid border-slate-100 border-2  bg-gradient-to-t from-sky-300 to-violet-300 md:mt-0 md:h-760 lg:w-500">
+                <div class="md:h-0">
+                    <h2 class=" mb-2 text-2xl text-slate-100">Titulo de tablero seleccionado</h2>
+                    <input class=" w-292 h-8 p-2 mt-4 text-lg text-gray-800 placeholder:text-slate-100 bg-transparent lg:w-360"
+                        type="text" placeholder="Agregar una tarea">
+                    <button
+                        class=" w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2">+</button>
+                </div>
+
+                <div class="w-80 flex justify-center lg:w-396">
+                    <ul class="mt-5 max-h-80 w-80 overflow-y-scroll md:max-h-96 lg:w-396">
+                        <li class="w-300 h-10 mb-3 flex rounded-md border-solid border-slate-100 border-2 lg:w-360">
+                            <img src="../img/pendiente.png" alt="check" class="h-7 pt-2 ml-2">
+                            <p class="pt-2 ml-2 text-gray-800">Título de tarea</p>
+                            <img src="" alt="eliminar" class="invisible">
+                        </li>
+
+                        <li class="w-300 h-10 mb-3 flex rounded-md border-solid border-slate-100 border-2 lg:w-360">
+                            <img src="../img/pendiente.png" alt="check" class="h-7 pt-2 ml-2">
+                            <p class="pt-2 ml-2 text-gray-800">Título de tarea</p>
+                            <img src="" alt="eliminar" class="invisible">
+                        </li>                    
+                    </ul>
+                </div>
+
+                <div class="lg:w-396">
+                    <h2 class="mt-10 mb-1 text-white text-lg font-bold">Notas</h2>
+                    <textarea class="h-48 w-80 mt-2 p-2 rounded-md resize-none text-gray-800 lg:w-396"></textarea>
+                    <div>
+                        <p></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
