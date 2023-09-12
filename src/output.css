@@ -834,8 +834,8 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .lg\:w-1000 {
-    width: 1000px;
+  .lg\:mt-5 {
+    margin-top: 1.25rem;
   }
 
   .lg\:w-360 {
@@ -847,6 +847,10 @@ video {
   }
 
   .lg\:w-500 {
-    width: 560px;
+    width: 500px;
+  }
+
+  .lg\:w-900 {
+    width: 900px;
   }
 }
