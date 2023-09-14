@@ -94,3 +94,13 @@ btnTablero.addEventListener('click', () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
