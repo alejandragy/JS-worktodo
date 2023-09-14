@@ -586,10 +586,6 @@ video {
   height: 2.5rem;
 }
 
-.h-16 {
-  height: 4rem;
-}
-
 .h-28 {
   height: 7rem;
 }
@@ -612,6 +608,10 @@ video {
 
 .h-9 {
   height: 2.25rem;
+}
+
+.h-16 {
+  height: 4rem;
 }
 
 .max-h-80 {
@@ -656,6 +656,10 @@ video {
 
 .justify-center {
   justify-content: center;
+}
+
+.self-center {
+  align-self: center;
 }
 
 .overflow-y-scroll {

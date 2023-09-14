@@ -49,30 +49,31 @@ function crearObjetoTablero(titulo, id) {
 
 function crearTablero(tablero) {
     let liTablero = document.createElement('li');
-    liTablero.innerHTML = `
-    <li class="flex justify-center">
-    </li>`;
+    liTablero.classList.add('flex','justify-center');
 
     let buttonTablero = document.createElement('button');
-    buttonTablero.innerHTML = `<button class="w-300 h-16 border-solid border-violet-300 border-b-2 bg-white text-gray-800 tablero" id="tablero-${tablero.id}">${tablero.titulo}</button>`
+    buttonTablero.className += "w-300 h-16 border-solid border-violet-300 border-b-2 bg-white text-gray-800 tablero";
+    buttonTablero.setAttribute("id", `tablero-${tablero.id}`);
+    buttonTablero.innerText = `${tablero.titulo}`;
+
     buttonTablero.addEventListener('click', () => {
         tituloTablero.innerText = `${tablero.titulo}` //modifica el texto dentro del h2 de tablero seleccionado
     })
 
     ulTableros.append(liTablero); 
-    liTablero.append(buttonTablero);
+    liTablero.appendChild(buttonTablero);
 }
 
 inputTablero.addEventListener('keyup', function(e){
     if(e.key=='Enter'){
-        crearTablero(crearObjetoTablero(inputTablero.value, idTableros))
+        crearTablero(crearObjetoTablero(inputTablero.value, idTableros));
         inputTablero.value = null;
     }
 })
 
 btnTablero.addEventListener('click', () => {
     if (inputTablero.value) {
-        crearTablero(crearObjetoTablero(inputTablero.value))
+        crearTablero(crearObjetoTablero(inputTablero.value));
         inputTablero.value = null;
     }
 });
