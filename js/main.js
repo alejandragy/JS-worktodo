@@ -1,12 +1,14 @@
 //trayendo elementos de DOM
-let inputTablero = document.getElementById('inputTablero');
+const inputTablero = document.getElementById('inputTablero');
 const btnTablero = document.getElementById('btnTablero');
 const ulTableros = document.getElementById('listaTableros');
+const tableros = document.getElementsByClassName('tablero'); //no se si voy a usarlo
+const tituloTablero = document.getElementById('tituloTablero');
 
 
-
-//globales
+// variables globales
 const totalTableros = [];
+let idTableros= 0; //no se si voy a usarlo 
 
 
 //clases
@@ -19,7 +21,8 @@ class Tarea {
 }
 
 class Tablero {
-    constructor(titulo) {
+    constructor(titulo, id) {
+        this.id = id;
         this.titulo = titulo;
         this.tareas = [];
     }
@@ -37,29 +40,52 @@ class Tablero {
 
 
 /* creación de tablero */
-function crearObjetoTablero(titulo) {
-    const tableroNuevo = new Tablero(titulo);
+function crearObjetoTablero(titulo, id) {
+    const tableroNuevo = new Tablero(titulo,id);
     totalTableros.push(tableroNuevo);
+    idTableros += 1;
     return tableroNuevo;
 }
 
-function crearLiTablero(tablero) {
+function crearTablero(tablero) {
     let liTablero = document.createElement('li');
     liTablero.innerHTML = `
     <li class="flex justify-center">
-        <button class="w-300 h-16 border-solid border-violet-300 border-b-2 bg-white text-gray-800">${tablero.titulo}</button>
     </li>`;
+
+    let buttonTablero = document.createElement('button');
+    buttonTablero.innerHTML = `<button class="w-300 h-16 border-solid border-violet-300 border-b-2 bg-white text-gray-800 tablero" id="tablero-${tablero.id}">${tablero.titulo}</button>`
+    buttonTablero.addEventListener('click', () => {
+        tituloTablero.innerText = `${tablero.titulo}` //modifica el texto dentro del h2 de tablero seleccionado
+    })
+
     ulTableros.append(liTablero); 
+    liTablero.append(buttonTablero);
 }
+
+inputTablero.addEventListener('keyup', function(e){
+    if(e.key=='Enter'){
+        crearTablero(crearObjetoTablero(inputTablero.value, idTableros))
+        inputTablero.value = null;
+    }
+})
 
 btnTablero.addEventListener('click', () => {
     if (inputTablero.value) {
-        crearLiTablero(crearObjetoTablero(inputTablero.value))
+        crearTablero(crearObjetoTablero(inputTablero.value))
         inputTablero.value = null;
     }
 });
 
-console.log(totalTableros);
+
+
+
+
+
+
+
+
+
 
 
 
