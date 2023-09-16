@@ -24,19 +24,19 @@ class Tablero {
     }
 }
 
+
+
 //trayendo elementos de DOM
 const inputTablero = document.getElementById('inputTablero');
 const btnTablero = document.getElementById('btnTablero');
 const ulTableros = document.getElementById('listaTableros');
-const tableros = document.getElementsByClassName('tablero'); //no se si voy a usarlo
 const tituloTablero = document.getElementById('tituloTablero');
 
 const inputTarea = document.getElementById('inputTarea');
 const btnTarea = document.getElementById('btnTarea'); /**/
 const ulTareas = document.getElementById('listaTareas'); /**/
 
-// variables globales
-let idTableroSeleccionado;
+
 
 // variables globales y localStorage
 let totalTableros;
@@ -47,22 +47,39 @@ else {
     totalTableros = [];
 }
 
-let idTableros = 0;
-if (localStorage.getItem('idTableros')) {
-    idTableros = JSON.parse(localStorage.getItem('idTableros'));
+let contadorIdTableros = 0;
+if (localStorage.getItem('contadorIdTableros')) {
+    contadorIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros'));
 }
 else {
-    idTableros = parseInt('0');
+    contadorIdTableros = parseInt('0');
 }
+
+let idTableroSeleccionado;
+
+
+
+/* cargar tableros desde localStorage al cargar la página */
+function tablerosDesdeLocalStorage() {
+    for (let i = 0; i < localStorage.length; i++){
+        const key = localStorage.key(i);
+        if (key.startsWith('tablero-')){
+            const tablero = JSON.parse(localStorage.getItem(key));
+            crearTablero(tablero);
+        }
+    }
+}
+window.addEventListener('load', () => {tablerosDesdeLocalStorage();});
+
 
 
 /* funciones para crear nuevo tablero */
 function crearObjetoTablero(titulo, id) {
     const tableroNuevo = new Tablero(titulo, id);
     totalTableros.push(tableroNuevo);
-    localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
-    idTableros += 1;
-    localStorage.setItem('idTableros', JSON.stringify(idTableros));
+    localStorage.setItem(`tablero-${id}`, JSON.stringify(tableroNuevo));
+    contadorIdTableros += 1;
+    localStorage.setItem('contadorIdTableros', JSON.stringify(contadorIdTableros));
     return tableroNuevo;
 }
 
@@ -80,24 +97,20 @@ function crearTablero(objetoTablero) {
     liTablero.append(buttonTablero);
 
     buttonTablero.addEventListener('click', () => {
+        seleccionarTablero()
         tituloTablero.innerText = `${objetoTablero.titulo}`
         idTableroSeleccionado = objetoTablero.id;
+        localStorage.setItem('idTableroSeleccionado', JSON.stringify(idTableroSeleccionado));
+        localStorage.setItem('tableroSeleccionado', JSON.stringify(seleccionarTablero()));
     })
 }
 
-/* cargar tableros desde localStorage al cargar la página */
-function tablerosDesdeLocalStorage() {
-    const tablerosDeLocalStorage = JSON.parse(localStorage.getItem('totalTableros')) || [];
-    for (const tablero of tablerosDeLocalStorage) {
-        crearTablero(tablero);
-    }
-}
-window.addEventListener('load', () => {tablerosDesdeLocalStorage();});
+
 
 /* crear nuevo tablero en DOM */
 btnTablero.addEventListener('click', () => {
     if (inputTablero.value) {
-        crearTablero(crearObjetoTablero(inputTablero.value, idTableros));
+        crearTablero(crearObjetoTablero(inputTablero.value, contadorIdTableros));
         inputTablero.value = null;
     }
 
@@ -105,20 +118,45 @@ btnTablero.addEventListener('click', () => {
 
 
 
-
 /* seleccionar tablero */
 function seleccionarTablero() {
-    const tableroSeleccionado = totalTableros.find((tablero) => tablero.id === idTableroSeleccionado);
+    /*const tablerosDeLocalStorage = JSON.parse(localStorage.getItem('totalTableros')) || [];
+    const tableroSeleccionado = tablerosDeLocalStorage.find((tablero) => tablero.id === idTableroSeleccionado);
+    return tableroSeleccionado;*/
+    const tableroSeleccionado = JSON.parse(localStorage.getItem(`tablero-${idTableroSeleccionado}`))
+    console.log('tablero seleccionado', tableroSeleccionado);
     return tableroSeleccionado;
 }
 
-/* agregar tarea */
+
+
+btnTarea.addEventListener('click', () => {
+    if (inputTarea.value) {
+        const tableroSeleccionado = seleccionarTablero()
+        if (tableroSeleccionado){
+            tableroSeleccionado.agregarTarea(inputTarea.value);
+            localStorage.setItem(`tablero-${idTableroSeleccionado}`);
+            localStorage.setItem(JSON.stringify(tableroSeleccionado)); /* revisar esto */
+            inputTarea.value = null;
+        }
+    }
+});
+
+
+
+
+
+
+//borradores
+/* agregar tarea 
 function crearTarea(tablero, tarea) {
     tablero.agregarTarea(`${tarea}`);
-}
+}*/
 
 
-function mostrarTareas(tableroSeleccionado) {
+
+/*function mostrarTareas(tableroSeleccionado) { 
+    
     const arrayTareas = tableroSeleccionado.tareas;
 
     /*arrayTareas.forEach(tarea => {
@@ -161,15 +199,9 @@ function mostrarTareas(tableroSeleccionado) {
         <p class="pt-2 ml-2 text-gray-800">${tarea.titulo}</p>
         <img src="./img/" class="invisible" alt="eliminar">
     </li>`
-    });*/
+    });
+}*/
 
-}
 
 
-btnTarea.addEventListener('click', () => {
-    if (inputTarea.value) {
-        crearTarea(seleccionarTablero(), inputTarea.value);
-        inputTarea.value = null;
-    }
-});
 
