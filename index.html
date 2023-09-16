@@ -17,7 +17,7 @@
         <div class="w-360 mt-2 mb-2 md:w-760 md:flex md:justify-between lg:w-900 lg:mt-8 ">
 
             <!--Tableros-->
-            <section class="w-360 flex flex-wrap">
+            <section class="w-360 flex flex-wrap shadow-lg  shadow-slate-400 rounded-md">
 
                 <div class=" w-full h-32 pt-5 rounded-t-lg bg-gradient-to-t from-violet-300 to-sky-300">
                     <h1 class="text-center text-4xl text-slate-100 font-bold ">Tableritos</h1>
@@ -32,17 +32,17 @@
                     </div>
                 </div>
 
-                <ul class="w-full h-64 pb-10 overflow-y-scroll  rounded-b-lg border-solid border-slate-100 border-2 md:h-631" id="listaTableros"></ul>
+                <ul class="w-full h-64 pb-10 overflow-y-scroll  rounded-b-lg border-solid border-slate-100 border-2 md:h-631 " id="listaTableros" ></ul>
             </section>
 
             <!--Tablero seleccionado-->
             <section
-                class="mt-5 pt-5 pb-5 w-360 flex flex-wrap justify-center rounded-md border-solid border-slate-100 border-2  bg-gradient-to-t from-sky-300 to-violet-300 md:mt-0 md:h-760 lg:w-500">
-                <div class="h-32">
+                class="mt-5 pt-5 pb-5 w-360 flex flex-wrap justify-center rounded-md   bg-gradient-to-t from-sky-300 to-violet-300 shadow-lg shadow-slate-400 md:mt-0 md:h-760 lg:w-500">
+                <div class="h-32 mt-4">
                     <h2 class=" h-8 mb-2 text-2xl text-slate-100" id="tituloTablero">Titulo de tablero seleccionado</h2>
                     <div class="flex gap-2 mt-6 h-12">
                         <input
-                            class=" w-64 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 focus:outline-none bg-transparent lg:w-360" id="inputTarea"
+                            class=" w-72 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 focus:outline-none bg-transparent lg:w-360" id="inputTarea"
                             type="text" placeholder="Agregar una tarea">
                         <button
                             class=" w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2" id="btnTarea">+</button>
