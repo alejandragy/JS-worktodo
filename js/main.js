@@ -58,19 +58,10 @@ let idTarea;
 /* traer de LS al cargar la página */
 function tablerosDesdeLS() {
     const tableros = JSON.parse(localStorage.getItem('totalTableros'));
-    tableros.forEach(tablero => {crearTableroDOM(tablero)});
+    tableros.forEach(tablero => { crearTableroDOM(tablero) });
 }
 
-window.addEventListener('load', () => {
-    const tableros = JSON.parse(localStorage.getItem('totalTableros'));
-    if (tableros.length > 0) {
-        tablerosDesdeLS();
-    }
-    else {
-        return;
-    }
-}
-);
+window.addEventListener('load', () => { tablerosDesdeLS(); });
 
 
 
@@ -103,8 +94,9 @@ function crearTableroDOM(objetoTablero) {
         tituloTablero.innerText = `${objetoTablero.titulo}`
         idTableroSeleccionado = objetoTablero.id;
         localStorage.setItem('idTableroSeleccionado', JSON.stringify(idTableroSeleccionado));
-        //localStorage.setItem('tituloTableroSeleccionado', JSON.stringify(objetoTablero.titulo)); /**/
         localStorage.setItem('tableroSeleccionado', JSON.stringify(seleccionarTablero()));
+        ulTareas.innerHTML = "";
+        mostrarTareas(seleccionarTablero()); /**/
     })
 
 
@@ -136,14 +128,15 @@ function agregarTarea(tablero, tarea) {
 
 //funciones
 function crearObjetoTarea(id, tarea) {
-        const nuevaTarea = new Tarea(id, tarea);
-        const tableroSeleccionado = seleccionarTablero();
-        agregarTarea(tableroSeleccionado, nuevaTarea);
-        localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
-        return nuevaTarea;
+    const nuevaTarea = new Tarea(id, tarea);
+    const tableroSeleccionado = seleccionarTablero();
+    agregarTarea(tableroSeleccionado, nuevaTarea);
+    localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+    return nuevaTarea;
 }
 
-function crearTareaDOM(objetoTarea){
+
+function crearTareaDOM(objetoTarea) {
     //crear li tarea
     let liTarea = document.createElement('li');
     liTarea.classList.add('w-300', 'h-10', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-360', `${objetoTarea.id}`)
@@ -176,74 +169,48 @@ function crearTareaDOM(objetoTarea){
     imgEliminar.setAttribute('alt', 'eliminar');
 }
 
+function mostrarTareas(tableroSeleccionado){
+    for (let i = 0; i < tableroSeleccionado.tareas.length; i++) {
+        //crear li tarea
+    let liTarea = document.createElement('li');
+    liTarea.classList.add('w-300', 'h-10', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-360', `${tableroSeleccionado.tareas.id}`)
+    ulTareas.append(liTarea);
+
+    //crear img tarea pendiente
+    let imgPendiente = document.createElement('img');
+    imgPendiente.classList.add('h-7', 'pt-2', 'ml-2');
+    imgPendiente.setAttribute('src', './img/pendiente.png');
+    imgPendiente.setAttribute('alt', 'pendiente');
+    liTarea.append(imgPendiente);
+
+    //crear img tarea realizada
+    let imgRealizada = document.createElement('img');
+    imgRealizada.classList.add('h-7', 'pt-2', 'ml-2', 'hidden');
+    imgRealizada.setAttribute('src', './img/listo.png');
+    imgRealizada.setAttribute('alt', 'realizada');
+    liTarea.append(imgRealizada);
+
+    //crear titulo de tarea
+    let pTarea = document.createElement('p');
+    pTarea.classList.add('pt-2', 'ml-2', 'text-gray-800');
+    pTarea.innerText = `${tableroSeleccionado.tareas[i].titulo}`
+    liTarea.append(pTarea);
+
+    //crear img eliminar
+    let imgEliminar = document.createElement('img');
+    imgEliminar.classList.add('invisible');
+    //imgEliminar.setAttribute('src', );
+    imgEliminar.setAttribute('alt', 'eliminar');
+    }
+}
+
 //botón para crear tarea
 btnTarea.addEventListener('click', () => {
     const tableroSeleccionado = seleccionarTablero();
-    if (inputTarea.value){
-    /*const nuevaTarea =*/ crearObjetoTarea(`tarea-tablero${tableroSeleccionado.id}`, inputTarea.value);
-    /*if(nuevaTarea.tablero == tableroSeleccionado.titulo){crearTareaDOM(nuevaTarea);};*/
+    if (inputTarea.value) {
+        const nuevaTarea = crearObjetoTarea(`tarea-tablero${tableroSeleccionado.id}`, inputTarea.value);
+        crearTareaDOM(nuevaTarea);
         inputTarea.value = null;
     }
 });
-
-
-
-
-
-
-//borradores
-/* guardarTableroEnLS
-function guardarTableroEnLS(tablero) {
-    localStorage.setItem(`tablero-${tablero.id}`, JSON.stringify(tablero));
-}*/
-
-
-
-/*function mostrarTareas(tableroSeleccionado) { 
-    
-    const arrayTareas = tableroSeleccionado.tareas;
-
-    /*arrayTareas.forEach(tarea => {
-        //crear li tarea
-        let liTarea = document.createElement('li');
-        liTarea.classList.add('w-300', 'h-10', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-360')
-        ulTareas.append(liTarea);
-
-        //crear img tarea pendiente
-        let imgPendiente = document.createElement('img');
-        imgPendiente.classList.add('h-7', 'pt-2', 'ml-2');
-        imgPendiente.setAttribute('src', './img/pendiente.png');
-        imgPendiente.setAttribute('alt', 'pendiente');
-        liTarea.append(imgPendiente);
-
-        //crear img tarea realizada
-        let imgRealizada = document.createElement('img');
-        imgRealizada.classList.add('h-7', 'pt-2', 'ml-2', 'hidden');
-        imgRealizada.setAttribute('src', './img/listo.png');
-        imgRealizada.setAttribute('alt', 'realizada');
-        liTarea.append(imgRealizada);
-
-        //crear titulo de tarea
-        let pTarea = document.createElement('p');
-        pTarea.classList.add('pt-2', 'ml-2', 'text-gray-800');
-        pTarea.innerText = `${tarea.titulo}`
-        liTarea.append(pTarea);
-
-        //crear img eliminar
-        let imgEliminar = document.createElement('img');
-        imgEliminar.classList.add('invisible');
-        //imgEliminar.setAttribute('src', );
-        imgEliminar.setAttribute('alt', 'eliminar');
-
-
-    ulTareas.innerHTML= `
-    <li class="'w-300 h-10 mb-3 flex rounded-md border-solid border-slate-100 border-2 lg:w-360">
-        <img src="./img/pendiente.png" class="h-7 pt-2 ml-2" alt="tarea pendiente">
-        <img src="./img/listo.png" class="h-7 pt-2 ml-2 hidden" alt="tarea realizada">
-        <p class="pt-2 ml-2 text-gray-800">${tarea.titulo}</p>
-        <img src="./img/" class="invisible" alt="eliminar">
-    </li>`
-    });
-}*/
-
 
