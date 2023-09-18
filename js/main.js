@@ -34,23 +34,10 @@ const ulTareas = document.getElementById('listaTareas');
 
 // variables globales y localStorage
 let totalTableros;
-if (localStorage.getItem('totalTableros')) {
-    totalTableros = JSON.parse(localStorage.getItem('totalTableros'));
-}
-else {
-    totalTableros = [];
-}
-
+localStorage.getItem('totalTableros') ? totalTableros = JSON.parse(localStorage.getItem('totalTableros')) : totalTableros = [];
 let contIdTableros = 0;
-if (localStorage.getItem('contadorIdTableros')) {
-    contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros'));
-}
-else {
-    contIdTableros = parseInt('0');
-}
-
+localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros')) : contIdTableros = parseInt('0');
 let idTableroSeleccionado;
-
 let idTarea;
 
 
@@ -61,7 +48,8 @@ function tablerosDesdeLS() {
     tableros.forEach(tablero => { crearTableroDOM(tablero) });
 }
 
-window.addEventListener('load', () => { tablerosDesdeLS(); });
+window.addEventListener('load', () => { localStorage.getItem('totalTableros') && tablerosDesdeLS(); });
+
 
 
 
@@ -71,7 +59,7 @@ function crearObjetoTablero(titulo, id) {
     const tableroNuevo = new Tablero(titulo, id);
     totalTableros.push(tableroNuevo);
     contIdTableros += 1;
-    localStorage.setItem('totalTableros', JSON.stringify(totalTableros)); /**/
+    localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
     localStorage.setItem('contadorIdTableros', contIdTableros);
     return tableroNuevo;
 }
@@ -96,7 +84,7 @@ function crearTableroDOM(objetoTablero) {
         localStorage.setItem('idTableroSeleccionado', JSON.stringify(idTableroSeleccionado));
         localStorage.setItem('tableroSeleccionado', JSON.stringify(seleccionarTablero()));
         ulTareas.innerHTML = "";
-        mostrarTareas(seleccionarTablero()); /**/
+        mostrarTareas(seleccionarTablero());
     })
 
 
@@ -118,8 +106,6 @@ btnTablero.addEventListener('click', () => {
 
 
 
-
-
 /* tareas */
 function agregarTarea(tablero, tarea) {
     tablero.tareas.push(tarea);
@@ -133,7 +119,6 @@ function crearObjetoTarea(id, tarea) {
     localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
     return nuevaTarea;
 }
-
 
 function crearTareaDOM(objetoTarea) {
     //crear li tarea
@@ -168,10 +153,8 @@ function crearTareaDOM(objetoTarea) {
     imgEliminar.setAttribute('alt', 'eliminar');
 }
 
-function mostrarTareas(tableroSeleccionado){
-    for (let i = 0; i < tableroSeleccionado.tareas.length; i++) {
-        crearTareaDOM(tableroSeleccionado.tareas[i])
-    }
+function mostrarTareas(tableroSeleccionado) {
+    for (let i = 0; i < tableroSeleccionado.tareas.length; i++) { crearTareaDOM(tableroSeleccionado.tareas[i]) }
 }
 
 //botón para crear tarea
