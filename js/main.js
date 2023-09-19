@@ -41,7 +41,7 @@ localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localSt
 let idTableroSeleccionado;
 let idTarea;
 let notas;
-localStorage.getItem('notas') ? notas = localStorage.getItem('notas') : '';
+localStorage.getItem('notas') ? notas = localStorage.getItem('notas') : notas = '';
 
 
 
@@ -128,34 +128,26 @@ function crearObjetoTarea(id, tarea) {
 function crearTareaDOM(objetoTarea) {
     //crear li tarea
     let liTarea = document.createElement('li');
-    liTarea.classList.add('w-300', 'h-10', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-360', `${objetoTarea.id}`)
+    liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'justify-between', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-360', `${objetoTarea.id}`)
     ulTareas.append(liTarea);
 
-    //crear img tarea pendiente
-    let imgPendiente = document.createElement('img');
-    imgPendiente.classList.add('h-7', 'pt-2', 'ml-2');
-    imgPendiente.setAttribute('src', './img/pendiente.png');
-    imgPendiente.setAttribute('alt', 'pendiente');
-    liTarea.append(imgPendiente);
-
-    //crear img tarea realizada
-    let imgRealizada = document.createElement('img');
-    imgRealizada.classList.add('h-7', 'pt-2', 'ml-2', 'hidden');
-    imgRealizada.setAttribute('src', './img/listo.png');
-    imgRealizada.setAttribute('alt', 'realizada');
-    liTarea.append(imgRealizada);
+    //crear btn tarea pendiente
+    let btnPendiente = document.createElement('button');
+    btnPendiente.classList.add('mr-2');
+    btnPendiente.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="pendiente">`;
+    liTarea.append(btnPendiente);
 
     //crear titulo de tarea
     let pTarea = document.createElement('p');
-    pTarea.classList.add('pt-2', 'ml-2', 'text-gray-800');
+    pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
-    //crear img eliminar
-    let imgEliminar = document.createElement('img');
-    imgEliminar.classList.add('invisible');
-    //imgEliminar.setAttribute('src', );
-    imgEliminar.setAttribute('alt', 'eliminar');
+    //crear btn eliminar
+    let btnEliminar = document.createElement('button');
+    btnEliminar.classList.add('mr-3', 'invisible'); 
+    btnEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar.png" alt="eliminar">`;
+    liTarea.append(btnEliminar);
 }
 
 function mostrarTareas(tableroSeleccionado) {
@@ -174,9 +166,5 @@ btnTarea.addEventListener('click', () => {
 
 
 
-
 /* notas */
-txtNotas.addEventListener('input', () => {
-    const notas = txtNotas.value;
-    localStorage.setItem('notas', notas)
-});
+txtNotas.addEventListener('input', () => {const notas = txtNotas.value; localStorage.setItem('notas', notas)});
