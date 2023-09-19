@@ -17,13 +17,13 @@
         <div class="w-360 mt-2 mb-2 md:w-760 md:flex md:justify-between lg:w-900 lg:mt-8 ">
 
             <!--Tableros-->
-            <section class="w-360 flex flex-wrap shadow-lg  shadow-slate-400 rounded-md">
+            <section class="w-360 flex flex-wrap shadow-lg  shadow-slate-400 rounded-md md:h-796">
 
                 <div class=" w-full h-32 pt-5 rounded-t-lg bg-gradient-to-t from-violet-300 to-sky-300">
                     <h1 class="text-center text-4xl text-slate-100 font-bold ">Tableritos</h1>
                     <div class=" mt-4 flex gap-2 justify-center">
                         <input
-                            class="w-64 h-9 text-lg text-gray-800 border-slate-100 border-b-2 focus:outline-none placeholder:text-slate-100 bg-transparent"
+                            class="w-64 h-9 text-lg text-gray-800 border-slate-100 border-b-2 focus:outline-none placeholder:text-slate-100 bg-transparent placeholder:opacity-70"
                             type="text" placeholder="Agregar un tablero" id="inputTablero">
                         <button
                             class="w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2"
@@ -32,34 +32,32 @@
                     </div>
                 </div>
 
-                <ul class="w-full h-64 pb-10 overflow-y-scroll  rounded-b-lg border-solid border-slate-100 border-2 md:h-631 " id="listaTableros" ></ul>
+                <ul class="w-full h-64 pb-10 overflow-y-scroll  rounded-b-lg  md:h-632 " id="listaTableros" ></ul>
             </section>
 
             <!--Tablero seleccionado-->
-            <section
-                class="mt-5 pt-5 pb-5 w-360 flex flex-wrap justify-center rounded-md   bg-gradient-to-t from-sky-300 to-violet-300 shadow-lg shadow-slate-400 md:mt-0 md:h-760 lg:w-500">
-                <div class="h-32 mt-4">
-                    <h2 class=" h-8 mb-2 text-2xl text-slate-100" id="tituloTablero">Titulo de tablero seleccionado</h2>
-                    <div class="flex gap-2 mt-6 h-12">
-                        <input
-                            class=" w-72 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 focus:outline-none bg-transparent lg:w-360" id="inputTarea"
-                            type="text" maxlength="70" placeholder="Agregar una tarea">
-                        <button
-                            class=" w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2" id="btnTarea">+</button>
+            <section class="">
+                <article class="p-5 pb-6 h-500 w-360 mt-4 flex justify-center flex-wrap rounded-md bg-gradient-to-t from-sky-300 to-violet-300  shadow-lg shadow-slate-400 md:mt-0 md:h-512 lg:w-500">
+                    <div class="h-32 mt-4">
+                        <h2 class=" h-8 mb-2 text-2xl text-slate-100" id="tituloTablero">Titulo de tablero seleccionado</h2>
+                        <div class="flex gap-2 mt-6 h-12">
+                            <input
+                                class=" w-72 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 placeholder:opacity-70 focus:outline-none bg-transparent lg:w-360" id="inputTarea"
+                                type="text" maxlength="70" placeholder="Agregar una tarea">
+                            <button
+                                class=" w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2" id="btnTarea">+</button>
+                        </div>
                     </div>
-                </div>
-
-                <div class=" h-64 flex justify-center flex-col lg:w-396">
-                    <ul class="max-h-80 w-80 overflow-y-scroll lg:w-396 lg:h-80" id="listaTareas"></ul>
-                </div>
-
-                <div class="lg:w-396">
-                    <h2 class="mt-10 mb-1 text-white text-lg ">Notas</h2>
-                    <textarea class="h-48 w-80 mt-2 p-2 rounded-md resize-none focus:outline-none text-gray-800 lg:w-396" id="notas"></textarea>
-                    <div>
-                        <p></p>
+    
+                    <div class=" h-80 flex justify-center flex-col lg:w-396">
+                        <ul class="h-80 w-80 mb-4 overflow-y-scroll lg:w-396 " id="listaTareas"></ul>
                     </div>
-                </div>
+                </article>
+                
+                <article class="mt-4 p-5 bg-gradient-to-t from-violet-300 to-sky-300 shadow-lg shadow-slate-400 rounded-md flex flex-wrap lg:w-500">
+                        <h2 class=" text-white text-lg ">Notas</h2>
+                        <textarea class="h-48 w-full mt-2 bg-transparent rounded-md resize-none focus:outline-none text-gray-800 placeholder:text-slate-100 lg:w-500 placeholder:opacity-70" id="notas" placeholder="Escribí aquí ..."></textarea>
+                </article>
             </section>
         </div>
     </main>
