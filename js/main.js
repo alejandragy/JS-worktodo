@@ -30,6 +30,7 @@ const tituloTablero = document.getElementById('tituloTablero');
 const inputTarea = document.getElementById('inputTarea');
 const btnTarea = document.getElementById('btnTarea');
 const ulTareas = document.getElementById('listaTareas');
+const txtNotas = document.getElementById('notas');
 
 
 // variables globales y localStorage
@@ -39,6 +40,8 @@ let contIdTableros = 0;
 localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros')) : contIdTableros = parseInt('0');
 let idTableroSeleccionado;
 let idTarea;
+let notas;
+localStorage.getItem('notas') ? notas = localStorage.getItem('notas') : '';
 
 
 
@@ -48,7 +51,9 @@ function tablerosDesdeLS() {
     tableros.forEach(tablero => { crearTableroDOM(tablero) });
 }
 
-window.addEventListener('load', () => { localStorage.getItem('totalTableros') && tablerosDesdeLS(); });
+
+window.addEventListener('load', () => { localStorage.getItem('totalTableros') && tablerosDesdeLS(); txtNotas.value = notas; })
+
 
 
 
@@ -167,3 +172,11 @@ btnTarea.addEventListener('click', () => {
     }
 });
 
+
+
+
+/* notas */
+txtNotas.addEventListener('input', () => {
+    const notas = txtNotas.value;
+    localStorage.setItem('notas', notas)
+});
