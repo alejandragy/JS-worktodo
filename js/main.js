@@ -40,7 +40,6 @@ let idTableroSeleccionado;
 //tareas
 let contIdTareas = 0;
 localStorage.getItem('contadorIdTareas') ? contIdTareas = JSON.parse(localStorage.getItem('contadorIdTareas')) : contIdTareas = parseInt('0');
-let idTareaSeleccionada;
 let idTareaSeleccionadaDOM;
 //notas
 let notas;
@@ -89,8 +88,6 @@ function crearTableroDOM(objetoTablero) {
         seleccionarTablero()
         tituloTablero.innerText = `${objetoTablero.titulo}`
         idTableroSeleccionado = objetoTablero.id;
-        localStorage.setItem('idTableroSeleccionado', JSON.stringify(idTableroSeleccionado));
-        localStorage.setItem('tableroSeleccionado', JSON.stringify(seleccionarTablero()));
         ulTareas.innerHTML = "";
         mostrarTareas(seleccionarTablero());
     })
@@ -159,7 +156,6 @@ function crearTareaDOM(objetoTarea) {
         const liTarea = btnEstado.parentNode;
         //almacenar en local storage
         idTareaSeleccionadaDOM = liTarea.id;
-        localStorage.setItem('idTareaSeleccionadaDOM', JSON.stringify(idTareaSeleccionadaDOM));
         //marcar como realizada
         const tareaSeleccionada = seleccionarTarea();
         tareaSeleccionada.realizada = true;
@@ -183,7 +179,6 @@ function seleccionarTarea(tablero) {
     const tableroSeleccionado = seleccionarTablero();
     const tareasDelTablero = tableroSeleccionado.tareas;
     const tareaSeleccionada = tareasDelTablero.find((tarea) => tarea.id === idTareaSeleccionadaDOM);
-    console.log(tareaSeleccionada);
     return tareaSeleccionada;
 }
 
