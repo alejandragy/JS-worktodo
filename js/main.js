@@ -92,7 +92,6 @@ function crearTableroDOM(objetoTablero) {
         mostrarTareas(seleccionarTablero());
     })
 
-
 }
 
 function seleccionarTablero() {
@@ -100,7 +99,7 @@ function seleccionarTablero() {
     return tableroSeleccionado;
 }
 
-//botón para crear tablero 
+//eventos para crear tableros
 btnTablero.addEventListener('click', () => {
     if (inputTablero.value) {
         crearTableroDOM(crearObjetoTablero(inputTablero.value, contIdTableros));
@@ -108,6 +107,14 @@ btnTablero.addEventListener('click', () => {
     }
 });
 
+inputTablero.addEventListener('keyup', function (e) {
+    if (e.key == 'Enter') {
+        if (inputTablero.value) {
+            crearTableroDOM(crearObjetoTablero(inputTablero.value, contIdTableros));
+            inputTablero.value = null;
+        }
+    }
+});
 
 
 
@@ -137,12 +144,12 @@ function crearTareaDOM(objetoTarea) {
     //crear btn tarea pendiente
     let btnEstado = document.createElement('button');
     btnEstado.classList.add('mr-2');
-    objetoTarea.realizada ? btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">` : btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="pendiente">`; 
+    objetoTarea.realizada ? btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">` : btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="pendiente">`;
     liTarea.append(btnEstado);
 
     //crear titulo de tarea
     let pTarea = document.createElement('p');
-    objetoTarea.realizada? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
+    objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
@@ -158,12 +165,24 @@ function crearTareaDOM(objetoTarea) {
         idTareaSeleccionadaDOM = liTarea.id;
         //marcar como realizada
         const tareaSeleccionada = seleccionarTarea();
-        tareaSeleccionada.realizada = true;
-        localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
-        //marcar como realizada en DOM
-        btnEstado.innerHTML = '';
-        btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">`;
-        pTarea.classList.add('line-through'); 
+        if (tareaSeleccionada.realizada === false) {
+            //marcar como realizada
+            tareaSeleccionada.realizada = true;
+            localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+            //marcar como realizada en DOM
+            btnEstado.innerHTML = '';
+            btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">`;
+            pTarea.classList.add('line-through');
+        }
+        else {
+            //marcar como pendiente
+            tareaSeleccionada.realizada = false;
+            localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+            //marcar como pendiente en DOM
+            btnEstado.innerHTML = '';
+            btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="realizada">`;
+            pTarea.classList.remove('line-through');
+        }
     })
 
     /*btnEliminar.addEventListener('click', ()=> {
@@ -182,7 +201,7 @@ function seleccionarTarea(tablero) {
     return tareaSeleccionada;
 }
 
-//botón para crear tarea
+//eventos para crear tareas
 btnTarea.addEventListener('click', () => {
     if (inputTarea.value) {
         const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
@@ -191,9 +210,15 @@ btnTarea.addEventListener('click', () => {
     }
 });
 
-ulTareas.addEventListener
-
-
+inputTarea.addEventListener('keyup', function (e) {
+    if (e.key == 'Enter') {
+        if (inputTarea.value) {
+            const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
+            crearTareaDOM(nuevaTarea);
+            inputTarea.value = null;
+        }
+    }
+});
 
 /* notas */
 txtNotas.addEventListener('input', () => { const notas = txtNotas.value; localStorage.setItem('notas', notas) });
