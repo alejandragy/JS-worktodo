@@ -1,4 +1,4 @@
-//clases
+/* clases */
 class Tarea {
     constructor(id, titulo) {
         this.id = id;
@@ -15,14 +15,11 @@ class Tablero {
     }
     /*eliminarTarea(index) {
         this.tareas.splice(index, 1);
-    }
-    realizarTarea(input) {
-        this.tareas[input].realizada = true;
     }*/
 }
 
 
-//trayendo elementos de DOM
+/* trayendo elementos de DOM */
 const inputTablero = document.getElementById('inputTablero');
 const btnTablero = document.getElementById('btnTablero');
 const ulTableros = document.getElementById('listaTableros');
@@ -33,13 +30,19 @@ const ulTareas = document.getElementById('listaTareas');
 const txtNotas = document.getElementById('notas');
 
 
-// variables globales y localStorage
+/* variables globales y localStorage */
+//tableros
 let totalTableros;
 localStorage.getItem('totalTableros') ? totalTableros = JSON.parse(localStorage.getItem('totalTableros')) : totalTableros = [];
 let contIdTableros = 0;
 localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros')) : contIdTableros = parseInt('0');
 let idTableroSeleccionado;
-let idTarea;
+//tareas
+let contIdTareas = 0;
+localStorage.getItem('contadorIdTareas') ? contIdTareas = JSON.parse(localStorage.getItem('contadorIdTareas')) : contIdTareas = parseInt('0');
+let idTareaSeleccionada;
+let idTareaSeleccionadaDOM;
+//notas
 let notas;
 localStorage.getItem('notas') ? notas = localStorage.getItem('notas') : notas = '';
 
@@ -121,7 +124,9 @@ function crearObjetoTarea(id, tarea) {
     const nuevaTarea = new Tarea(id, tarea);
     const tableroSeleccionado = seleccionarTablero();
     agregarTarea(tableroSeleccionado, nuevaTarea);
+    contIdTareas += 1;
     localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+    localStorage.setItem('contadorIdTareas', JSON.stringify(contIdTareas));
     return nuevaTarea;
 }
 
@@ -129,42 +134,71 @@ function crearTareaDOM(objetoTarea) {
     //crear li tarea
     let liTarea = document.createElement('li');
     liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'justify-between', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-360', `${objetoTarea.id}`)
+    liTarea.setAttribute('id', `${objetoTarea.id}`);
     ulTareas.append(liTarea);
 
     //crear btn tarea pendiente
-    let btnPendiente = document.createElement('button');
-    btnPendiente.classList.add('mr-2');
-    btnPendiente.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="pendiente">`;
-    liTarea.append(btnPendiente);
+    let btnEstado = document.createElement('button');
+    btnEstado.classList.add('mr-2');
+    objetoTarea.realizada ? btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">` : btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="pendiente">`; 
+    liTarea.append(btnEstado);
 
     //crear titulo de tarea
     let pTarea = document.createElement('p');
-    pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
+    objetoTarea.realizada? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
     //crear btn eliminar
     let btnEliminar = document.createElement('button');
-    btnEliminar.classList.add('mr-3', 'invisible'); 
+    btnEliminar.classList.add('mr-3', 'opacity-30');
     btnEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar.png" alt="eliminar">`;
     liTarea.append(btnEliminar);
+
+    btnEstado.addEventListener('click', () => {
+        const liTarea = btnEstado.parentNode;
+        //almacenar en local storage
+        idTareaSeleccionadaDOM = liTarea.id;
+        localStorage.setItem('idTareaSeleccionadaDOM', JSON.stringify(idTareaSeleccionadaDOM));
+        //marcar como realizada
+        const tareaSeleccionada = seleccionarTarea();
+        tareaSeleccionada.realizada = true;
+        localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+        //marcar como realizada en DOM
+        btnEstado.innerHTML = '';
+        btnEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">`;
+        pTarea.classList.add('line-through'); 
+    })
+
+    /*btnEliminar.addEventListener('click', ()=> {
+
+    })*/
 }
 
 function mostrarTareas(tableroSeleccionado) {
     for (let i = 0; i < tableroSeleccionado.tareas.length; i++) { crearTareaDOM(tableroSeleccionado.tareas[i]) }
 }
 
+function seleccionarTarea(tablero) {
+    const tableroSeleccionado = seleccionarTablero();
+    const tareasDelTablero = tableroSeleccionado.tareas;
+    const tareaSeleccionada = tareasDelTablero.find((tarea) => tarea.id === idTareaSeleccionadaDOM);
+    console.log(tareaSeleccionada);
+    return tareaSeleccionada;
+}
+
 //botón para crear tarea
 btnTarea.addEventListener('click', () => {
-    const tableroSeleccionado = seleccionarTablero();
     if (inputTarea.value) {
-        const nuevaTarea = crearObjetoTarea(`tarea-tablero${tableroSeleccionado.id}`, inputTarea.value);
+        const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
         crearTareaDOM(nuevaTarea);
         inputTarea.value = null;
     }
 });
 
+ulTareas.addEventListener
+
 
 
 /* notas */
-txtNotas.addEventListener('input', () => {const notas = txtNotas.value; localStorage.setItem('notas', notas)});
+txtNotas.addEventListener('input', () => { const notas = txtNotas.value; localStorage.setItem('notas', notas) });
