@@ -534,10 +534,6 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.invisible {
-  visibility: hidden;
-}
-
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -852,6 +848,14 @@ video {
 
 .placeholder\:opacity-70::placeholder {
   opacity: 0.7;
+}
+
+.hover\:opacity-0:hover {
+  opacity: 0;
+}
+
+.hover\:opacity-100:hover {
+  opacity: 1;
 }
 
 .focus\:outline-none:focus {

@@ -13,9 +13,6 @@ class Tablero {
         this.titulo = titulo;
         this.tareas = [];
     }
-    /*eliminarTarea(index) {
-        this.tareas.splice(index, 1);
-    }*/
 }
 
 
@@ -155,14 +152,13 @@ function crearTareaDOM(objetoTarea) {
 
     //crear btn eliminar
     let btnEliminar = document.createElement('button');
-    btnEliminar.classList.add('mr-3', 'opacity-30');
+    btnEliminar.classList.add('mr-3', 'opacity-30', 'hover:opacity-100');
     btnEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar.png" alt="eliminar">`;
     liTarea.append(btnEliminar);
 
     btnEstado.addEventListener('click', () => {
         const liTarea = btnEstado.parentNode;
-        //almacenar en local storage
-        idTareaSeleccionadaDOM = liTarea.id;
+        idTareaSeleccionadaDOM = liTarea.id; //asigna el valor a la variable global idTareaSeleccionada para usar después en la funcion seleccionarTarea
         //marcar como realizada
         const tareaSeleccionada = seleccionarTarea();
         if (tareaSeleccionada.realizada === false) {
@@ -185,9 +181,17 @@ function crearTareaDOM(objetoTarea) {
         }
     })
 
-    /*btnEliminar.addEventListener('click', ()=> {
-
-    })*/
+    btnEliminar.addEventListener('click', ()=> {
+        const liTarea = btnEliminar.parentNode;
+        //eliminar objeto
+        const tareaSeleccionada = seleccionarTarea(); 
+        const tareasDelTablero = seleccionarTablero().tareas;
+        const indexTareaSeleccionada = tareasDelTablero.indexOf(tareaSeleccionada);
+        tareasDelTablero.splice(indexTareaSeleccionada, 1);
+        localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+        //eliminar en DOM
+        liTarea.remove();  
+    })
 }
 
 function mostrarTareas(tableroSeleccionado) {
