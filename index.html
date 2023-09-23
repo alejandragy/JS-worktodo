@@ -16,9 +16,9 @@
 
         <div class="w-360 mt-2 mb-2 md:w-760 md:flex md:justify-between lg:w-900 lg:mt-8 ">
             <!--Tableros-->
-            <section class="w-360 flex flex-wrap rounded-md shadow-md  shadow-slate-300 md:h-796 ">
+            <section class="w-360 flex flex-wrap rounded-md shadow-md  shadow-slate-300 md:h-796 bg-gradient-to-t from-violet-300 to-indigo-400">
                 
-                <div class=" w-full h-32 pt-5  rounded-t-md bg-gradient-to-t from-violet-300 to-sky-300  ">
+                <div class=" w-full h-32 pt-5  rounded-t-md  ">
                     <h1 class="text-center text-4xl text-slate-100 font-bold ">Tableritos</h1>
                     <div class=" mt-4 flex gap-2 justify-center">
                         <input
@@ -31,14 +31,14 @@
                     </div>
                 </div>
 
-                <ul class="w-full flex flex-col items-center h-80 pb-5 overflow-y-scroll mt-2 rounded-b-lg  md:h-632 md:mt-0" id="listaTableros" >
+                <ul class="w-full flex flex-col items-center h-80 pb-5 overflow-y-auto mt-2 rounded-b-lg  md:h-632 md:mt-0" id="listaTableros" >
                     
                 </ul>
             </section>
 
             <!--Tablero seleccionado-->
             <section class="">
-                <article class="p-5 pb-6 h-500 w-360 mt-4 flex justify-center flex-wrap rounded-md bg-gradient-to-t from-sky-300 to-violet-300  shadow-md shadow-slate-300 md:mt-0 md:h-512 lg:w-500">
+                <article class="p-5 pb-6 h-500 w-360 mt-4 flex justify-center flex-wrap rounded-md bg-gradient-to-t from-indigo-400 to-violet-300  shadow-md shadow-slate-300 md:mt-0 md:h-512 lg:w-500">
                     <div class="h-32 mt-4">
                         <h2 class=" h-8 mb-2 text-2xl text-slate-100" id="tituloTablero">Selecciona o crea un tablero</h2>
                         <div class="flex gap-2 mt-6 h-12">
@@ -57,9 +57,9 @@
                     </div>
                 </article>
                 
-                <article class="mt-4 p-5 bg-gradient-to-t from-violet-300 to-sky-300 shadow-md shadow-slate-300 rounded-md flex flex-wrap lg:w-500">
+                <article class="mt-4 p-5 bg-gradient-to-t from-violet-300 to-indigo-400 shadow-md shadow-slate-300 rounded-md flex flex-wrap lg:w-500">
                         <h2 class=" text-white text-lg ">Notas</h2>
-                        <textarea class="h-48 w-full mt-2 bg-transparent rounded-md resize-none focus:outline-none text-gray-800 placeholder:text-slate-100 lg:w-500 placeholder:opacity-70" id="notas" placeholder="Clickeame para escribir..."></textarea>
+                        <textarea class="h-48 w-full mt-2 bg-transparent rounded-md resize-none focus:outline-none text-white placeholder:text-slate-100 lg:w-500 placeholder:opacity-70" id="notas" placeholder="Clickeame para escribir..."></textarea>
                 </article>
             </section>
         </div>

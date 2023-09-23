@@ -71,20 +71,20 @@ function crearObjetoTablero(titulo, id) {
 function crearTableroDOM(objetoTablero) {
     //crear li tablero
     let liTablero = document.createElement('li');
-    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'bg-violet-300', 'shadow-md',  'shadow-slate-300', 'md:ml-3');
+    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'bg-white');
     liTablero.setAttribute('id', `tablero-${objetoTablero.id}`)
     ulTableros.append(liTablero);
 
     //crear boton tablero
     let buttonTablero = document.createElement('button');
-    buttonTablero.classList.add('w-64', 'text-left', 'pl-2', 'h-16', 'text-white', 'rounded-l-md', 'text-lg', 'tablero');
+    buttonTablero.classList.add('w-64', 'text-left', 'pl-2', 'h-16', 'text-gray-800', 'rounded-l-md', 'text-lg', 'tablero');
     buttonTablero.innerText = `${objetoTablero.titulo}`;
     liTablero.append(buttonTablero);
 
     //crear boton eliminar tablero
     let buttonEliminar = document.createElement('button');
     buttonEliminar.classList.add('mr-3', 'pl-2', 'opacity-30', 'hover:opacity-100');
-    buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar.png" alt="eliminar">`;
+    buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar-indigo.png" alt="eliminar">`;
     liTablero.append(buttonEliminar);
 
     //evento para seleccionar tablero
@@ -110,7 +110,6 @@ function crearTableroDOM(objetoTablero) {
         tituloTablero.innerText = 'Selecciona o crea un tablero';
         ulTareas.innerText = '';
     })
-
 }
 
 function seleccionarTablero() {
@@ -168,7 +167,7 @@ function crearTareaDOM(objetoTarea) {
 
     //crear titulo de tarea
     let pTarea = document.createElement('p');
-    objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
+    objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-white', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-white', 'lg:w-280');
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
