@@ -106,7 +106,9 @@ function crearTableroDOM(objetoTablero) {
         totalTableros.splice(indexTableroSeleccionado, 1);
         localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
         //eliminar en DOM
-        liTablero.remove();  
+        liTablero.remove();
+        tituloTablero.innerText = 'Selecciona o crea un tablero';
+        ulTareas.innerText = '';
     })
 
 }
@@ -170,7 +172,7 @@ function crearTareaDOM(objetoTarea) {
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
-    //crear btn eliminar
+    //crear boton eliminar
     let buttonEliminar = document.createElement('button');
     buttonEliminar.classList.add('mr-3', 'opacity-30', 'hover:opacity-100');
     buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar.png" alt="eliminar">`;
@@ -216,6 +218,10 @@ function crearTareaDOM(objetoTarea) {
 
 function mostrarTareas(tableroSeleccionado) {
     for (let i = 0; i < tableroSeleccionado.tareas.length; i++) { crearTareaDOM(tableroSeleccionado.tareas[i]) }
+}
+
+function borrarTareas(){
+
 }
 
 function seleccionarTarea(tablero) {
