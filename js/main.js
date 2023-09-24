@@ -56,7 +56,6 @@ window.addEventListener('load', () => { localStorage.getItem('totalTableros') &&
 
 
 
-
 /* tableros */
 //funciones
 function crearObjetoTablero(titulo, id) {
@@ -71,7 +70,7 @@ function crearObjetoTablero(titulo, id) {
 function crearTableroDOM(objetoTablero) {
     //crear li tablero
     let liTablero = document.createElement('li');
-    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'bg-white');
+    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'bg-white', 'hover:bg-slate-100');
     liTablero.setAttribute('id', `tablero-${objetoTablero.id}`)
     ulTableros.append(liTablero);
 
@@ -136,6 +135,7 @@ inputTablero.addEventListener('keyup', function (e) {
 
 
 
+
 /* tareas */
 function agregarTarea(tablero, tarea) {
     tablero.tareas.push(tarea);
@@ -167,7 +167,7 @@ function crearTareaDOM(objetoTarea) {
 
     //crear titulo de tarea
     let pTarea = document.createElement('p');
-    objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-white', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-white', 'lg:w-280');
+    objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
@@ -219,10 +219,6 @@ function mostrarTareas(tableroSeleccionado) {
     for (let i = 0; i < tableroSeleccionado.tareas.length; i++) { crearTareaDOM(tableroSeleccionado.tareas[i]) }
 }
 
-function borrarTareas(){
-
-}
-
 function seleccionarTarea(tablero) {
     const tableroSeleccionado = seleccionarTablero();
     const tareasDelTablero = tableroSeleccionado.tareas;
@@ -248,6 +244,9 @@ inputTarea.addEventListener('keyup', function (e) {
         }
     }
 });
+
+
+
 
 /* notas */
 txtNotas.addEventListener('input', () => { const notas = txtNotas.value; localStorage.setItem('notas', notas) });
