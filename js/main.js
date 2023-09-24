@@ -38,6 +38,7 @@ let borrarIndigo = './img/borrar-indigo.png';
 //tareas
 let contIdTareas = 0;
 localStorage.getItem('contadorIdTareas') ? contIdTareas = JSON.parse(localStorage.getItem('contadorIdTareas')) : contIdTareas = parseInt('0');
+let advertencia = './img/advertencia.png'
 let realizada = './img/realizada.png';
 let pendiente = './img/pendiente.png';
 let borrarBlanco = './img/borrar.png';
@@ -228,10 +229,17 @@ function seleccionarTarea(tablero, idTarea) {
 
 //eventos para crear tareas
 btnTarea.addEventListener('click', () => {
-    if (inputTarea.value) {
+    if(inputTarea.value && seleccionarTablero()){
         const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
         crearTareaDOM(nuevaTarea);
         inputTarea.value = null;
+    }
+    else if (!seleccionarTablero()){
+        ulTareas.innerHTML = 
+        `<li class="text-white text-xl flex gap-4"> 
+            <img class= "h-10" src="${advertencia}" alt="advertencia">
+            <p>Crea o selecciona un tablero para agregarle tareas.</p>
+        </li>`  
     }
 });
 
