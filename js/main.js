@@ -8,7 +8,7 @@ class Tarea {
 }
 
 class Tablero {
-    constructor(titulo, id) {
+    constructor(id, titulo) {
         this.id = id;
         this.titulo = titulo;
         this.tareas = [];
@@ -34,36 +34,42 @@ localStorage.getItem('totalTableros') ? totalTableros = JSON.parse(localStorage.
 let contIdTableros = 0;
 localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros')) : contIdTableros = parseInt('0');
 let idTableroSeleccionado;
+let borrarIndigo = './img/borrar-indigo.png';
 //tareas
 let contIdTareas = 0;
 localStorage.getItem('contadorIdTareas') ? contIdTareas = JSON.parse(localStorage.getItem('contadorIdTareas')) : contIdTareas = parseInt('0');
-let idTareaSeleccionadaDOM;
+let realizada = './img/realizada.png';
+let pendiente = './img/pendiente.png';
+let borrarBlanco = './img/borrar.png';
 //notas
 let notas;
 localStorage.getItem('notas') ? notas = localStorage.getItem('notas') : notas = '';
 
 
 
-/* traer de LS al cargar la página */
+/* localStorage */
+//cargar tableros al abrir la página
 function tablerosDesdeLS() {
     const tableros = JSON.parse(localStorage.getItem('totalTableros'));
     tableros.forEach(tablero => { crearTableroDOM(tablero) });
 }
-
-
 window.addEventListener('load', () => { localStorage.getItem('totalTableros') && tablerosDesdeLS(); txtNotas.value = notas; })
+
+//guardar tableros en localStorage
+const guardarTablerosEnLS = () => localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
 
 
 
 
 /* tableros */
 //funciones
-function crearObjetoTablero(titulo, id) {
-    const tableroNuevo = new Tablero(titulo, id);
+function crearObjetoTablero(id, titulo) {
+    const tableroNuevo = new Tablero(id, titulo);
     totalTableros.push(tableroNuevo);
     contIdTableros += 1;
-    localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
-    localStorage.setItem('contadorIdTableros', contIdTableros);
+    guardarTablerosEnLS();
+    //localStorage.setItem('contadorIdTableros', contIdTableros);
+    localStorage.setItem('contadorIdTableros',contIdTableros);
     return tableroNuevo;
 }
 
@@ -74,16 +80,16 @@ function crearTableroDOM(objetoTablero) {
     liTablero.setAttribute('id', `tablero-${objetoTablero.id}`)
     ulTableros.append(liTablero);
 
-    //crear boton tablero
+    //crear botón tablero
     let buttonTablero = document.createElement('button');
     buttonTablero.classList.add('w-64', 'text-left', 'pl-2', 'h-16', 'text-gray-800', 'rounded-l-md', 'text-lg', 'tablero');
     buttonTablero.innerText = `${objetoTablero.titulo}`;
     liTablero.append(buttonTablero);
 
-    //crear boton eliminar tablero
+    //crear botón eliminar tablero
     let buttonEliminar = document.createElement('button');
     buttonEliminar.classList.add('mr-3', 'pl-2', 'opacity-30', 'hover:opacity-100');
-    buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar-indigo.png" alt="eliminar">`;
+    buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="${borrarIndigo}" alt="eliminar">`;
     liTablero.append(buttonEliminar);
 
     //evento para seleccionar tablero
@@ -97,14 +103,14 @@ function crearTableroDOM(objetoTablero) {
 
     //evento para eliminar tablero
     buttonEliminar.addEventListener('click', ()=> {
-        //eliminar objeto
+        //eliminar objeto tablero
         idTableroSeleccionado = objetoTablero.id;
-        const tableroSeleccionado = seleccionarTablero()
+        const tableroSeleccionado = seleccionarTablero();
         const liTablero = buttonEliminar.parentNode;
         const indexTableroSeleccionado = totalTableros.indexOf(tableroSeleccionado);
         totalTableros.splice(indexTableroSeleccionado, 1);
-        localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
-        //eliminar en DOM
+        guardarTablerosEnLS();
+        //eliminar tablero en DOM
         liTablero.remove();
         tituloTablero.innerText = 'Selecciona o crea un tablero';
         ulTareas.innerText = '';
@@ -118,18 +124,12 @@ function seleccionarTablero() {
 
 //eventos para crear tableros
 btnTablero.addEventListener('click', () => {
-    if (inputTablero.value) {
-        crearTableroDOM(crearObjetoTablero(inputTablero.value, contIdTableros));
-        inputTablero.value = null;
-    }
+    inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
 });
 
 inputTablero.addEventListener('keyup', function (e) {
     if (e.key == 'Enter') {
-        if (inputTablero.value) {
-            crearTableroDOM(crearObjetoTablero(inputTablero.value, contIdTableros));
-            inputTablero.value = null;
-        }
+        inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
     }
 });
 
@@ -137,18 +137,14 @@ inputTablero.addEventListener('keyup', function (e) {
 
 
 /* tareas */
-function agregarTarea(tablero, tarea) {
-    tablero.tareas.push(tarea);
-}
-
 //funciones
 function crearObjetoTarea(id, tarea) {
     const nuevaTarea = new Tarea(id, tarea);
     const tableroSeleccionado = seleccionarTablero();
     agregarTarea(tableroSeleccionado, nuevaTarea);
     contIdTareas += 1;
-    localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
-    localStorage.setItem('contadorIdTareas', JSON.stringify(contIdTareas));
+    guardarTablerosEnLS();
+    localStorage.setItem('contadorIdTareas', contIdTareas);
     return nuevaTarea;
 }
 
@@ -159,70 +155,74 @@ function crearTareaDOM(objetoTarea) {
     liTarea.setAttribute('id', `${objetoTarea.id}`);
     ulTareas.append(liTarea);
 
-    //crear btn tarea pendiente
+    //crear botón tarea pendiente
     let buttonEstado = document.createElement('button');
     buttonEstado.classList.add('mr-2');
-    objetoTarea.realizada ? buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">` : buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="pendiente">`;
+    objetoTarea.realizada ? buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="${realizada}" alt="realizada">` : buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="${pendiente}" alt="pendiente">`;
     liTarea.append(buttonEstado);
 
-    //crear titulo de tarea
+    //crear título de tarea
     let pTarea = document.createElement('p');
     objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
-    //crear boton eliminar
+    //crear botón eliminar
     let buttonEliminar = document.createElement('button');
     buttonEliminar.classList.add('mr-3', 'opacity-30', 'hover:opacity-100');
-    buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="./img/borrar.png" alt="eliminar">`;
+    buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="${borrarBlanco}" alt="eliminar">`;
     liTarea.append(buttonEliminar);
 
+    //evento para marcar tareas como realizadas o pendientes 
     buttonEstado.addEventListener('click', () => {
         const liTarea = buttonEstado.parentNode;
-        idTareaSeleccionadaDOM = liTarea.id; //asigna el valor a la variable global idTareaSeleccionada para usar después en la funcion seleccionarTarea
-        //marcar como realizada
-        const tareaSeleccionada = seleccionarTarea();
+        const tableroSeleccionado = seleccionarTablero();
+        const tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liTarea.id);
+        //marcar tarea como realizada
         if (tareaSeleccionada.realizada === false) {
-            //marcar como realizada
+            //marcar objeto como realizado
             tareaSeleccionada.realizada = true;
-            localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+            guardarTablerosEnLS();
             //marcar como realizada en DOM
-            buttonEstado.innerHTML = '';
-            buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/listo.png" alt="realizada">`;
+            buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="${realizada}" alt="realizada">`;
             pTarea.classList.add('line-through');
         }
+        //marcar tarea como pendiente
         else {
-            //marcar como pendiente
+            //marcar objeto como pendiente
             tareaSeleccionada.realizada = false;
-            localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
+            guardarTablerosEnLS();
             //marcar como pendiente en DOM
-            buttonEstado.innerHTML = '';
-            buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="./img/pendiente.png" alt="realizada">`;
+            buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="${pendiente}" alt="pendiente">`;
             pTarea.classList.remove('line-through');
         }
     })
 
+    //evento para eliminar tareas
     buttonEliminar.addEventListener('click', ()=> {
         const liTarea = buttonEliminar.parentNode;
-        //eliminar objeto
-        const tareaSeleccionada = seleccionarTarea(); 
-        const tareasDelTablero = seleccionarTablero().tareas;
+        //eliminar objeto tarea
+        const tableroSeleccionado = seleccionarTablero();
+        const tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liTarea.id); 
+        const tareasDelTablero = tableroSeleccionado.tareas;
         const indexTareaSeleccionada = tareasDelTablero.indexOf(tareaSeleccionada);
         tareasDelTablero.splice(indexTareaSeleccionada, 1);
-        localStorage.setItem('totalTableros', JSON.stringify(totalTableros));
-        //eliminar en DOM
+        guardarTablerosEnLS();
+        //eliminar tarea en DOM
         liTarea.remove();  
     })
+}
+
+function agregarTarea(tablero, tarea) {
+    tablero.tareas.push(tarea);
 }
 
 function mostrarTareas(tableroSeleccionado) {
     for (let i = 0; i < tableroSeleccionado.tareas.length; i++) { crearTareaDOM(tableroSeleccionado.tareas[i]) }
 }
 
-function seleccionarTarea(tablero) {
-    const tableroSeleccionado = seleccionarTablero();
-    const tareasDelTablero = tableroSeleccionado.tareas;
-    const tareaSeleccionada = tareasDelTablero.find((tarea) => tarea.id === idTareaSeleccionadaDOM);
+function seleccionarTarea(tablero, idTarea) {
+    const tareaSeleccionada = tablero.tareas.find((tarea) => tarea.id === idTarea);
     return tareaSeleccionada;
 }
 
