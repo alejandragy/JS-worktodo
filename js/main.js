@@ -1,4 +1,14 @@
 /* clases */
+class Tablero {
+    constructor(id, titulo, notas) {
+        this.id = id;
+        this.titulo = titulo;
+        this.tareas = [];
+        this.notas = notas;
+    }
+}
+
+
 class Tarea {
     constructor(id, titulo) {
         this.id = id;
@@ -7,23 +17,21 @@ class Tarea {
     }
 }
 
-class Tablero {
-    constructor(id, titulo) {
-        this.id = id;
-        this.titulo = titulo;
-        this.tareas = [];
-    }
-}
 
 
-/* trayendo elementos de DOM */
+
 const inputTablero = document.getElementById('inputTablero');
 const btnTablero = document.getElementById('btnTablero');
 const ulTableros = document.getElementById('listaTableros');
 const tituloTablero = document.getElementById('tituloTablero');
+const divcontainerTareas = document.getElementById('containerTareas');
 const inputTarea = document.getElementById('inputTarea');
 const btnTarea = document.getElementById('btnTarea');
 const ulTareas = document.getElementById('listaTareas');
+const btnFiltroTodas = document.getElementById('btnFiltroTodas');
+const btnFiltroPendientes = document.getElementById('btnFiltroPendientes');
+const btnFiltroRealizadas = document.getElementById('btnFiltroRealizadas');
+const divcontainerNotas = document.getElementById('containerNotas');
 const txtNotas = document.getElementById('notas');
 
 
@@ -69,8 +77,7 @@ function crearObjetoTablero(id, titulo) {
     totalTableros.push(tableroNuevo);
     contIdTableros += 1;
     guardarTablerosEnLS();
-    //localStorage.setItem('contadorIdTableros', contIdTableros);
-    localStorage.setItem('contadorIdTableros',contIdTableros);
+    localStorage.setItem('contadorIdTableros', contIdTableros);
     return tableroNuevo;
 }
 
@@ -95,15 +102,19 @@ function crearTableroDOM(objetoTablero) {
 
     //evento para seleccionar tablero
     buttonTablero.addEventListener('click', () => {
+        divcontainerTareas.classList.remove('invisible');
+        divcontainerNotas.classList.remove('invisible');
         seleccionarTablero()
         tituloTablero.innerText = `${objetoTablero.titulo}`
         idTableroSeleccionado = objetoTablero.id;
         ulTareas.innerHTML = "";
         mostrarTareas(seleccionarTablero());
+        txtNotas.value = '';
+        mostrarNotas();
     })
 
     //evento para eliminar tablero
-    buttonEliminar.addEventListener('click', ()=> {
+    buttonEliminar.addEventListener('click', () => {
         //eliminar objeto tablero
         idTableroSeleccionado = objetoTablero.id;
         const tableroSeleccionado = seleccionarTablero();
@@ -113,8 +124,8 @@ function crearTableroDOM(objetoTablero) {
         guardarTablerosEnLS();
         //eliminar tablero en DOM
         liTablero.remove();
-        tituloTablero.innerText = 'Selecciona o crea un tablero';
-        ulTareas.innerText = '';
+        divcontainerTareas.classList.add('invisible');
+        divcontainerNotas.classList.add('invisible');
     })
 }
 
@@ -125,7 +136,8 @@ function seleccionarTablero() {
 
 //eventos para crear tableros
 btnTablero.addEventListener('click', () => {
-    inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
+    inputTablero.value && 
+    crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
 });
 
 inputTablero.addEventListener('keyup', function (e) {
@@ -150,9 +162,10 @@ function crearObjetoTarea(id, tarea) {
 }
 
 function crearTareaDOM(objetoTarea) {
+    ulTareas.classList.add('overflow-y-scroll');
     //crear li tarea
     let liTarea = document.createElement('li');
-    liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'justify-between', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-360', `${objetoTarea.id}`)
+    liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-460', `${objetoTarea.id}`)
     liTarea.setAttribute('id', `${objetoTarea.id}`);
     ulTareas.append(liTarea);
 
@@ -164,7 +177,7 @@ function crearTareaDOM(objetoTarea) {
 
     //crear título de tarea
     let pTarea = document.createElement('p');
-    objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280', 'line-through') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-280');
+    objetoTarea.realizada ? pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'line-through', 'lg:w-396') : pTarea.classList.add('w-60', 'p-1', 'text-gray-800', 'lg:w-396');
     pTarea.innerText = `${objetoTarea.titulo}`
     liTarea.append(pTarea);
 
@@ -200,17 +213,17 @@ function crearTareaDOM(objetoTarea) {
     })
 
     //evento para eliminar tareas
-    buttonEliminar.addEventListener('click', ()=> {
+    buttonEliminar.addEventListener('click', () => {
         const liTarea = buttonEliminar.parentNode;
         //eliminar objeto tarea
         const tableroSeleccionado = seleccionarTablero();
-        const tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liTarea.id); 
+        const tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liTarea.id);
         const tareasDelTablero = tableroSeleccionado.tareas;
         const indexTareaSeleccionada = tareasDelTablero.indexOf(tareaSeleccionada);
         tareasDelTablero.splice(indexTareaSeleccionada, 1);
         guardarTablerosEnLS();
         //eliminar tarea en DOM
-        liTarea.remove();  
+        liTarea.remove();
     })
 }
 
@@ -229,17 +242,10 @@ function seleccionarTarea(tablero, idTarea) {
 
 //eventos para crear tareas
 btnTarea.addEventListener('click', () => {
-    if(inputTarea.value && seleccionarTablero()){
+    if (inputTarea.value) {
         const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
         crearTareaDOM(nuevaTarea);
         inputTarea.value = null;
-    }
-    else if (!seleccionarTablero()){
-        ulTareas.innerHTML = 
-        `<li class="text-white text-xl flex gap-4"> 
-            <img class= "h-10" src="${advertencia}" alt="advertencia">
-            <p>Crea o selecciona un tablero para agregarle tareas.</p>
-        </li>`  
     }
 });
 
@@ -254,7 +260,42 @@ inputTarea.addEventListener('keyup', function (e) {
 });
 
 
+/* filtros de tareas */
+//todas
+btnFiltroTodas.addEventListener('click', () => {
+    ulTareas.innerHTML = "";
+    mostrarTareas(seleccionarTablero());
+})
+
+//pendientes
+btnFiltroPendientes.addEventListener('click', () => {
+    ulTareas.innerHTML = "";
+    const tablero = seleccionarTablero();
+    const tareasPendientes = tablero.tareas.filter((tarea) =>!tarea.realizada);
+    for (let i = 0; i < tareasPendientes.length; i++) { crearTareaDOM(tareasPendientes[i]) }
+})
+
+//realizadas
+btnFiltroRealizadas.addEventListener('click', () => {
+    ulTareas.innerHTML = "";
+    const tablero = seleccionarTablero();
+    const tareasRealizadas = tablero.tareas.filter((tarea) => tarea.realizada);
+    for (let i = 0; i < tareasRealizadas.length; i++) { crearTareaDOM(tareasRealizadas[i]) }
+})
+
+
 
 
 /* notas */
-txtNotas.addEventListener('input', () => { const notas = txtNotas.value; localStorage.setItem('notas', notas) });
+function crearNotas() {
+    const notas = txtNotas.value;
+    const tableroSeleccionado = seleccionarTablero()
+    tableroSeleccionado.notas = notas;
+    guardarTablerosEnLS();  
+}
+function mostrarNotas(){
+    const tablero = seleccionarTablero();
+    if (tablero.notas !=null) {txtNotas.value = `${tablero.notas}`;}
+}
+
+txtNotas.addEventListener('input', () => { crearNotas() });
