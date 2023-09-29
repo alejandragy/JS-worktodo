@@ -87,7 +87,7 @@ function crearObjetoTablero(id, titulo) {
 function crearTableroDOM(objetoTablero) {
     //crear li tablero
     let liTablero = document.createElement('li');
-    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'bg-white', 'hover:bg-slate-100');
+    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'mt-2', 'bg-white', 'hover:scale-105', 'duration-75');
     liTablero.setAttribute('id', `tablero-${objetoTablero.id}`)
     ulTableros.append(liTablero);
 
@@ -274,7 +274,8 @@ function agregarTarea(tablero, tarea) {
 }
 
 function mostrarTareas(tableroSeleccionado) {
-    for (let i = 0; i < tableroSeleccionado.tareas.length; i++) { crearTareaDOM(tableroSeleccionado.tareas[i]) }
+    tableroSeleccionado.tareas.forEach((tarea)=>crearTareaDOM(tarea));
+
 }
 
 function seleccionarTarea(tablero, idTarea) {
@@ -314,7 +315,7 @@ btnFiltroPendientes.addEventListener('click', () => {
     ulTareas.innerHTML = "";
     const tablero = seleccionarTablero();
     const tareasPendientes = tablero.tareas.filter((tarea) => !tarea.realizada);
-    for (let i = 0; i < tareasPendientes.length; i++) { crearTareaDOM(tareasPendientes[i]) }
+    tareasPendientes.forEach((tarea) => {crearTareaDOM(tarea)});
 })
 
 //realizadas
@@ -322,7 +323,7 @@ btnFiltroRealizadas.addEventListener('click', () => {
     ulTareas.innerHTML = "";
     const tablero = seleccionarTablero();
     const tareasRealizadas = tablero.tareas.filter((tarea) => tarea.realizada);
-    for (let i = 0; i < tareasRealizadas.length; i++) { crearTareaDOM(tareasRealizadas[i]) }
+    tareasRealizadas.forEach((tarea) => {crearTareaDOM(tarea)});
 })
 
 

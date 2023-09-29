@@ -26,7 +26,7 @@
                             class="w-64 h-9 text-lg text-gray-800 border-slate-100 border-b-2  focus:outline-none placeholder:text-slate-100 bg-transparent placeholder:opacity-70"
                             type="text" placeholder="Agregar un tablero" id="inputTablero">
                         <button
-                            class="w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2 hover:text-indigo-400 hover:bg-slate-100"
+                            class="w-9 h-9 rounded-md font-bold text-indigo-400  bg-slate-100  border-slate-100 border-2  active:scale-90 duration-75"
                             id="btnTablero"> +
                         </button>
                     </div>
@@ -48,12 +48,12 @@
                                 type="text" maxlength="70" placeholder="Agregar una tarea">
                             
                                 <button
-                                class=" w-9 h-9 text-white font-bold bg-transparent rounded-md border-slate-100 border-2  hover:text-violet-300 hover:bg-slate-100" id="btnTarea">+</button>
+                                class=" w-9 h-9 rounded-md font-bold text-violet-300  bg-slate-100  border-slate-100 border-2 active:scale-90 duration-75" id="btnTarea">+</button>
                         </div>
                         <div class="w-80 flex gap-4 mb-4 mt-5 text-white xl:mt-2 xl:mb-3 xl:w-500">
-                            <button class="rounded-md border-2 border-slate-100 p-1 hover:text-violet-300 hover:bg-slate-100" id="btnFiltroTodas">todas</button>
-                            <button class="rounded-md border-2 border-slate-100 p-1 hover:text-violet-300 hover:bg-slate-100" id="btnFiltroPendientes">pendientes</button>
-                            <button class="rounded-md border-2 border-slate-100 p-1 hover:text-violet-300 hover:bg-slate-100" id="btnFiltroRealizadas">realizadas</button>
+                            <button class="rounded-md border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75" id="btnFiltroTodas">Todas</button>
+                            <button class="rounded-md border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75" id="btnFiltroPendientes">Pendientes</button>
+                            <button class="rounded-md border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75" id="btnFiltroRealizadas">Realizadas</button>
                         </div>
                         <div class="  h-80 flex justify-center flex-col lg:w-500 lg:h-632">
                             <ul class="h-80 w-80 mb-4 overflow-y-scroll lg:w-500 lg:h-570 " id="listaTareas">
