@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="./src/output.css" >
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500&display=swap" rel="stylesheet">
@@ -37,10 +38,10 @@
             </section>
 
             <!--Tablero seleccionado-->
-            <section class="flex mt-4 p-5 pb-6 h-500 w-360 rounded-md bg-gradient-to-t from-indigo-400 to-violet-300 shadow-md shadow-slate-300 md:mt-0 md:h-796 lg:w-632  xl:justify-center xl:w-900 2xl:1024">
+            <section class="flex mt-4 p-5 pb-6 h-500 w-360 rounded-md bg-gradient-to-t from-indigo-400 to-violet-300 shadow-md shadow-slate-300 md:mt-0 md:h-796 lg:w-632  xl:justify-center xl:w-900 2xl:1024 invisible" id="containerTableroSeleccionado">
                 
-                    <div class="h-32 w-360 mt-4 flex flex-wrap lg:mt-0 lg:w-500 invisible" id="containerTareas">
-                        <h2 class="h-5 mb-8 w-80 text-2xl text-slate-100 lg:mt-1 lg:w-500" id="tituloTablero">Selecciona un tablero para ver su detalle aquí </h2>
+                    <div class="h-32 w-360 mt-4 flex flex-wrap lg:mt-0 lg:w-500 opacity-0 transition ease-in-out delay-300" id="containerTareas">
+                        <h2 class="h-5 mb-8 w-80 text-2xl text-slate-100 lg:mt-1 lg:w-500" id="tituloTablero"></h2>
                         <div class="flex justify-center gap-2 mt-6 h-12 lg:mt-0">
                             <input
                                 class="w-280 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 placeholder:opacity-70 focus:outline-none bg-transparent lg:w-460 " id="inputTarea"
@@ -60,7 +61,7 @@
                         </div>                    
                     </div>
 
-                    <div class="hidden ml-6 xl:flex xl:flex-col items-center w-300 invisible" id="containerNotas">
+                    <div class="hidden ml-6 xl:flex xl:flex-col items-center w-300 opacity-0 transition ease-in-out delay-300" id="containerNotas">
                         <div class="h-396 w-300 mb-2 p-2 rounded-md border-2 border-slate-100">
                             <h2 class="text-white text-lg text-center"></h2>
                         </div>
@@ -72,6 +73,8 @@
             </section>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./js/main.js"></script>
 </body>
 

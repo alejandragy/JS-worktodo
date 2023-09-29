@@ -24,6 +24,7 @@ const inputTablero = document.getElementById('inputTablero');
 const btnTablero = document.getElementById('btnTablero');
 const ulTableros = document.getElementById('listaTableros');
 const tituloTablero = document.getElementById('tituloTablero');
+const divcontainerTableroSeleccionado = document.getElementById('containerTableroSeleccionado')
 const divcontainerTareas = document.getElementById('containerTareas');
 const inputTarea = document.getElementById('inputTarea');
 const btnTarea = document.getElementById('btnTarea');
@@ -43,6 +44,8 @@ let contIdTableros = 0;
 localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros')) : contIdTableros = parseInt('0');
 let idTableroSeleccionado;
 let borrarIndigo = './img/borrar-indigo.png';
+let contEventoTableros = 0;
+localStorage.getItem('contadorEventoTableros') ? contEventoTableros = JSON.parse(localStorage.getItem('contadorEventoTableros')) : contEventoTableros = parseInt('0');
 //tareas
 let contIdTareas = 0;
 localStorage.getItem('contadorIdTareas') ? contIdTareas = JSON.parse(localStorage.getItem('contadorIdTareas')) : contIdTareas = parseInt('0');
@@ -102,8 +105,9 @@ function crearTableroDOM(objetoTablero) {
 
     //evento para seleccionar tablero
     buttonTablero.addEventListener('click', () => {
-        divcontainerTareas.classList.remove('invisible');
-        divcontainerNotas.classList.remove('invisible');
+        divcontainerTableroSeleccionado.classList.remove('invisible');
+        divcontainerTareas.classList.remove('opacity-0')
+        divcontainerNotas.classList.remove('opacity-0');
         seleccionarTablero()
         tituloTablero.innerText = `${objetoTablero.titulo}`
         idTableroSeleccionado = objetoTablero.id;
@@ -124,8 +128,17 @@ function crearTableroDOM(objetoTablero) {
         guardarTablerosEnLS();
         //eliminar tablero en DOM
         liTablero.remove();
-        divcontainerTareas.classList.add('invisible');
-        divcontainerNotas.classList.add('invisible');
+        divcontainerTareas.classList.add('opacity-0');
+        divcontainerNotas.classList.add('opacity-0');
+        divcontainerTableroSeleccionado.classList.add('invisible');
+        Toastify({
+            text: "Tablero eliminado!",
+            className: "info",
+            style: {
+                background: "linear-gradient(to right, #fb887e, #e93a2b)",
+                'border-radius': '5px',
+            }
+        }).showToast();
     })
 }
 
@@ -136,14 +149,34 @@ function seleccionarTablero() {
 
 //eventos para crear tableros
 btnTablero.addEventListener('click', () => {
-    inputTablero.value && 
-    crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
+    inputTablero.value &&
+        crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
+    if (contEventoTableros === 0) {
+        Swal.fire({
+            title: 'Creaste tu primer tablero!',
+            text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
+            icon: 'success',
+        })
+    }
+    contEventoTableros += 1;
+    localStorage.setItem('contadorEventoTableros', contEventoTableros);
 });
 
 inputTablero.addEventListener('keyup', function (e) {
     if (e.key == 'Enter') {
         inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
+
+        if (contEventoTableros === 0) {
+            Swal.fire({
+                title: 'Creaste tu primer tablero!',
+                text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
+                icon: 'success',
+            })
+        }
+        contEventoTableros += 1;
+        localStorage.setItem('contadorEventoTableros', contEventoTableros);
     }
+
 });
 
 
@@ -165,7 +198,7 @@ function crearTareaDOM(objetoTarea) {
     ulTareas.classList.add('overflow-y-scroll');
     //crear li tarea
     let liTarea = document.createElement('li');
-    liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-460', `${objetoTarea.id}`)
+    liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-460', `${objetoTarea.id}`);
     liTarea.setAttribute('id', `${objetoTarea.id}`);
     ulTareas.append(liTarea);
 
@@ -186,6 +219,7 @@ function crearTareaDOM(objetoTarea) {
     buttonEliminar.classList.add('mr-3', 'opacity-30', 'hover:opacity-100');
     buttonEliminar.innerHTML = `<img class= "h-5 w-5" src="${borrarBlanco}" alt="eliminar">`;
     liTarea.append(buttonEliminar);
+
 
     //evento para marcar tareas como realizadas o pendientes 
     buttonEstado.addEventListener('click', () => {
@@ -224,6 +258,14 @@ function crearTareaDOM(objetoTarea) {
         guardarTablerosEnLS();
         //eliminar tarea en DOM
         liTarea.remove();
+        Toastify({
+            text: "Tarea eliminada!",
+            className: "info",
+            style: {
+                background: "linear-gradient(to right, #e93a2b, #fb887e)",
+                'border-radius': '5px',
+            }
+        }).showToast();
     })
 }
 
@@ -271,7 +313,7 @@ btnFiltroTodas.addEventListener('click', () => {
 btnFiltroPendientes.addEventListener('click', () => {
     ulTareas.innerHTML = "";
     const tablero = seleccionarTablero();
-    const tareasPendientes = tablero.tareas.filter((tarea) =>!tarea.realizada);
+    const tareasPendientes = tablero.tareas.filter((tarea) => !tarea.realizada);
     for (let i = 0; i < tareasPendientes.length; i++) { crearTareaDOM(tareasPendientes[i]) }
 })
 
@@ -291,11 +333,11 @@ function crearNotas() {
     const notas = txtNotas.value;
     const tableroSeleccionado = seleccionarTablero()
     tableroSeleccionado.notas = notas;
-    guardarTablerosEnLS();  
+    guardarTablerosEnLS();
 }
-function mostrarNotas(){
+function mostrarNotas() {
     const tablero = seleccionarTablero();
-    if (tablero.notas !=null) {txtNotas.value = `${tablero.notas}`;}
+    if (tablero.notas != null) { txtNotas.value = `${tablero.notas}`; }
 }
 
 txtNotas.addEventListener('input', () => { crearNotas() });
