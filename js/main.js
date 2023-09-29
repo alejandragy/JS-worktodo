@@ -44,8 +44,7 @@ let contIdTableros = 0;
 localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros')) : contIdTableros = parseInt('0');
 let idTableroSeleccionado;
 let borrarIndigo = './img/borrar-indigo.png';
-let alertPrimerTablero = false;
-localStorage.getItem('alertPrimerTablero') ? eventoTableros = JSON.parse(localStorage.getItem('alertPrimerTablero')) : alertPrimerTablero = false;
+
 //tareas
 let contIdTareas = 0;
 localStorage.getItem('contadorIdTareas') ? contIdTareas = JSON.parse(localStorage.getItem('contadorIdTareas')) : contIdTareas = parseInt('0');
@@ -53,6 +52,7 @@ let advertencia = './img/advertencia.png'
 let realizada = './img/realizada.png';
 let pendiente = './img/pendiente.png';
 let borrarBlanco = './img/borrar.png';
+
 //notas
 let notas;
 localStorage.getItem('notas') ? notas = localStorage.getItem('notas') : notas = '';
@@ -151,31 +151,26 @@ function seleccionarTablero() {
 btnTablero.addEventListener('click', () => {
     if (inputTablero.value) {
         crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-        if (!alertPrimerTablero || (alertPrimerTablero && totalTableros.length == 1)) {
+        if (totalTableros.length == 1) {
             Swal.fire({
                 title: 'Creaste tu primer tablero!',
                 text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
                 icon: 'success',
             })
         }
-        alertPrimerTablero = true;
-        localStorage.setItem('alertPrimerTableros', alertPrimerTablero);
     }
 });
 
 inputTablero.addEventListener('keyup', function (e) {
     if (e.key == 'Enter') {
         inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-
-        if (!alertPrimerTablero || (alertPrimerTablero && totalTableros.length == 1)) {
+        if (totalTableros.length == 1) {
             Swal.fire({
                 title: 'Creaste tu primer tablero!',
                 text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
                 icon: 'success',
             })
         }
-        alertPrimerTablero = true;
-        localStorage.setItem('alertPrimerTableros', alertPrimerTablero);
     }
 });
 
