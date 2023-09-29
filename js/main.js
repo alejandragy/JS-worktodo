@@ -44,8 +44,8 @@ let contIdTableros = 0;
 localStorage.getItem('contadorIdTableros') ? contIdTableros = JSON.parse(localStorage.getItem('contadorIdTableros')) : contIdTableros = parseInt('0');
 let idTableroSeleccionado;
 let borrarIndigo = './img/borrar-indigo.png';
-let contEventoTableros = 0;
-localStorage.getItem('contadorEventoTableros') ? contEventoTableros = JSON.parse(localStorage.getItem('contadorEventoTableros')) : contEventoTableros = parseInt('0');
+let alertPrimerTablero = false;
+localStorage.getItem('alertPrimerTablero') ? eventoTableros = JSON.parse(localStorage.getItem('alertPrimerTablero')) : alertPrimerTablero = false;
 //tareas
 let contIdTareas = 0;
 localStorage.getItem('contadorIdTareas') ? contIdTareas = JSON.parse(localStorage.getItem('contadorIdTareas')) : contIdTareas = parseInt('0');
@@ -149,32 +149,33 @@ function seleccionarTablero() {
 
 //eventos para crear tableros
 btnTablero.addEventListener('click', () => {
-    inputTablero.value &&
+    if (inputTablero.value) {
         crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-    if (contEventoTableros === 0) {
-        Swal.fire({
-            title: 'Creaste tu primer tablero!',
-            text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
-            icon: 'success',
-        })
-    }
-    contEventoTableros += 1;
-    localStorage.setItem('contadorEventoTableros', contEventoTableros);
-});
-
-inputTablero.addEventListener('keyup', function (e) {
-    if (e.key == 'Enter') {
-        inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-
-        if (contEventoTableros === 0) {
+        if (!alertPrimerTablero) {
             Swal.fire({
                 title: 'Creaste tu primer tablero!',
                 text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
                 icon: 'success',
             })
         }
-        contEventoTableros += 1;
-        localStorage.setItem('contadorEventoTableros', contEventoTableros);
+        alertPrimerTablero = true;
+        localStorage.setItem('alertPrimerTableros', alertPrimerTablero);
+    }
+});
+
+inputTablero.addEventListener('keyup', function (e) {
+    if (e.key == 'Enter') {
+        inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
+
+        if (!alertPrimerTablero) {
+            Swal.fire({
+                title: 'Creaste tu primer tablero!',
+                text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
+                icon: 'success',
+            })
+        }
+        alertPrimerTablero = true;
+        localStorage.setItem('alertPrimerTableros', alertPrimerTablero);
     }
 
 });
@@ -274,7 +275,7 @@ function agregarTarea(tablero, tarea) {
 }
 
 function mostrarTareas(tableroSeleccionado) {
-    tableroSeleccionado.tareas.forEach((tarea)=>crearTareaDOM(tarea));
+    tableroSeleccionado.tareas.forEach((tarea) => crearTareaDOM(tarea));
 
 }
 
@@ -315,7 +316,7 @@ btnFiltroPendientes.addEventListener('click', () => {
     ulTareas.innerHTML = "";
     const tablero = seleccionarTablero();
     const tareasPendientes = tablero.tareas.filter((tarea) => !tarea.realizada);
-    tareasPendientes.forEach((tarea) => {crearTareaDOM(tarea)});
+    tareasPendientes.forEach((tarea) => { crearTareaDOM(tarea) });
 })
 
 //realizadas
@@ -323,7 +324,7 @@ btnFiltroRealizadas.addEventListener('click', () => {
     ulTareas.innerHTML = "";
     const tablero = seleccionarTablero();
     const tareasRealizadas = tablero.tareas.filter((tarea) => tarea.realizada);
-    tareasRealizadas.forEach((tarea) => {crearTareaDOM(tarea)});
+    tareasRealizadas.forEach((tarea) => { crearTareaDOM(tarea) });
 })
 
 
