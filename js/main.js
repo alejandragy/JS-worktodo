@@ -151,7 +151,7 @@ function seleccionarTablero() {
 btnTablero.addEventListener('click', () => {
     if (inputTablero.value) {
         crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-        if (!alertPrimerTablero) {
+        if (!alertPrimerTablero || (alertPrimerTablero && totalTableros.length == 1)) {
             Swal.fire({
                 title: 'Creaste tu primer tablero!',
                 text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
@@ -167,7 +167,7 @@ inputTablero.addEventListener('keyup', function (e) {
     if (e.key == 'Enter') {
         inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
 
-        if (!alertPrimerTablero) {
+        if (!alertPrimerTablero || (alertPrimerTablero && totalTableros.length == 1)) {
             Swal.fire({
                 title: 'Creaste tu primer tablero!',
                 text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
@@ -177,7 +177,6 @@ inputTablero.addEventListener('keyup', function (e) {
         alertPrimerTablero = true;
         localStorage.setItem('alertPrimerTableros', alertPrimerTablero);
     }
-
 });
 
 
