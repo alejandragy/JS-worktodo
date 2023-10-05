@@ -19,7 +19,7 @@ class Tarea {
 
 
 
-
+/* trayendo elementos de DOM */
 const inputTablero = document.getElementById('inputTablero');
 const btnTablero = document.getElementById('btnTablero');
 const ulTableros = document.getElementById('listaTableros');
@@ -87,7 +87,7 @@ function crearObjetoTablero(id, titulo) {
 function crearTableroDOM(objetoTablero) {
     //crear li tablero
     let liTablero = document.createElement('li');
-    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'mt-2', 'bg-white', 'hover:scale-105', 'duration-75');
+    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'mt-2', 'bg-white', 'hover:scale-105', 'duration-75','transition-opacity', 'duration-700');
     liTablero.setAttribute('id', `tablero-${objetoTablero.id}`)
     ulTableros.append(liTablero);
 
@@ -127,7 +127,10 @@ function crearTableroDOM(objetoTablero) {
         totalTableros.splice(indexTableroSeleccionado, 1);
         guardarTablerosEnLS();
         //eliminar tablero en DOM
-        liTablero.remove();
+        liTablero.classList.add('opacity-0')
+        setTimeout(()=>{
+            liTablero.remove();
+        }, 500)
         divcontainerTareas.classList.add('opacity-0');
         divcontainerNotas.classList.add('opacity-0');
         divcontainerTableroSeleccionado.classList.add('invisible');
@@ -163,13 +166,15 @@ btnTablero.addEventListener('click', () => {
 
 inputTablero.addEventListener('keyup', function (e) {
     if (e.key == 'Enter') {
-        inputTablero.value && crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-        if (totalTableros.length == 1) {
-            Swal.fire({
-                title: 'Creaste tu primer tablero!',
-                text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
-                icon: 'success',
-            })
+        if (inputTablero.value) {
+            crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
+            if (totalTableros.length == 1) {
+                Swal.fire({
+                    title: 'Creaste tu primer tablero!',
+                    text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
+                    icon: 'success',
+                })
+            }
         }
     }
 });
@@ -193,7 +198,7 @@ function crearTareaDOM(objetoTarea) {
     ulTareas.classList.add('overflow-y-scroll');
     //crear li tarea
     let liTarea = document.createElement('li');
-    liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-460', `${objetoTarea.id}`);
+    liTarea.classList.add('w-300', 'min-h-10', 'max-h-28', 'mb-3', 'flex', 'rounded-md', 'border-solid', 'border-slate-100', 'border-2', 'lg:w-460', `${objetoTarea.id}`, 'transition-opacity', 'duration-700');
     liTarea.setAttribute('id', `${objetoTarea.id}`);
     ulTareas.append(liTarea);
 
@@ -222,9 +227,8 @@ function crearTareaDOM(objetoTarea) {
         const tableroSeleccionado = seleccionarTablero();
         const tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liTarea.id);
         //marcar tarea como realizada
-        if (tareaSeleccionada.realizada === false) {
-            //marcar objeto como realizado
-            tareaSeleccionada.realizada = true;
+        if (!tareaSeleccionada.realizada) {
+            tareaSeleccionada.realizada = true; //marcar objeto como realizado
             guardarTablerosEnLS();
             //marcar como realizada en DOM
             buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="${realizada}" alt="realizada">`;
@@ -232,8 +236,7 @@ function crearTareaDOM(objetoTarea) {
         }
         //marcar tarea como pendiente
         else {
-            //marcar objeto como pendiente
-            tareaSeleccionada.realizada = false;
+            tareaSeleccionada.realizada = false; //marcar objeto como pendiente
             guardarTablerosEnLS();
             //marcar como pendiente en DOM
             buttonEstado.innerHTML = `<img class= "h-5 ml-2" src="${pendiente}" alt="pendiente">`;
@@ -245,14 +248,14 @@ function crearTareaDOM(objetoTarea) {
     buttonEliminar.addEventListener('click', () => {
         const liTarea = buttonEliminar.parentNode;
         //eliminar objeto tarea
-        const tableroSeleccionado = seleccionarTablero();
-        const tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liTarea.id);
-        const tareasDelTablero = tableroSeleccionado.tareas;
-        const indexTareaSeleccionada = tareasDelTablero.indexOf(tareaSeleccionada);
-        tareasDelTablero.splice(indexTareaSeleccionada, 1);
+        eliminarTarea(liTarea);
         guardarTablerosEnLS();
         //eliminar tarea en DOM
-        liTarea.remove();
+        liTarea.classList.add('opacity-0')
+        setTimeout(()=>{
+            liTarea.remove();
+        }, 600)
+        
         Toastify({
             text: "Tarea eliminada!",
             className: "info",
@@ -266,6 +269,13 @@ function crearTareaDOM(objetoTarea) {
 
 function agregarTarea(tablero, tarea) {
     tablero.tareas.push(tarea);
+}
+
+function eliminarTarea(tarea) {
+    const tareaSeleccionada = seleccionarTarea(seleccionarTablero(), tarea.id);
+    const tareasDelTablero = seleccionarTablero().tareas;
+    const indexTareaSeleccionada = tareasDelTablero.indexOf(tareaSeleccionada);
+    tareasDelTablero.splice(indexTareaSeleccionada, 1);
 }
 
 function mostrarTareas(tableroSeleccionado) {
@@ -331,9 +341,40 @@ function crearNotas() {
     tableroSeleccionado.notas = notas;
     guardarTablerosEnLS();
 }
+
 function mostrarNotas() {
     const tablero = seleccionarTablero();
     if (tablero.notas != null) { txtNotas.value = `${tablero.notas}`; }
 }
 
 txtNotas.addEventListener('input', () => { crearNotas() });
+
+
+
+
+/* div fetch gestión del tiempo*/
+const h2TituloMetodo = document.getElementById('titulo-metodo');
+const pDescripcionMetodo = document.getElementById('descripcion-metodo');
+const pObjetivoMetodo = document.getElementById('objetivo-metodo');
+const btnMetodo = document.getElementById('button-metodo');
+
+btnMetodo.addEventListener('click', () => {
+    mostrarMetodoAleatorio();
+})
+
+function mostrarMetodoAleatorio() {
+    fetch('/data.json')
+        .then((res) => res.json())
+        .then((data) => {
+            if (data && data.length > 0) {
+                const indexAleatorio = Math.floor(Math.random() * data.length);
+                const metodoAleatorio = data[indexAleatorio];
+
+                h2TituloMetodo.innerText = metodoAleatorio.metodo;
+                pDescripcionMetodo.innerText = metodoAleatorio.descripcion;
+                pObjetivoMetodo.innerText = metodoAleatorio.objetivo;
+            }
+        })
+}
+
+

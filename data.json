@@ -1,0 +1,32 @@
+[
+    {
+        "metodo": "Método Pomodoro 🍅",
+        "descripcion": "Es una técnica de gestión del tiempo que se basa en dividir el trabajo en intervalos de tiempo llamados Pomodoros. Cada Pomodoro dura generalmente 25 minutos y está seguido de un breve descanso de 5 minutos. Después de completar cuatro Pomodoros, se toma un descanso más largo de 15-30 minutos",
+        "objetivo": "Objetivo: Mejorar la concentración y la productividad al dividir el trabajo en bloques de tiempo enfocados y descansos regulares."
+    },
+    {
+        "metodo": "Getting Things Done 📝",
+        "descripcion": "Es un sistema de gestión del tiempo y la productividad que se centra en capturar todas las tareas, organizarlas en listas y luego tomar decisiones sobre qué hacer a continuación. Se basa en cinco pasos clave: Capturar, Aclarar, Organizar, Reflexionar y Comprometerse.",
+        "objetivo": "Objetivo: Lograr una sensación de control y claridad al gestionar tareas y proyectos, reduciendo el estrés y aumentando la eficiencia."
+    },
+    {
+        "metodo": "Técnica Eat That Frog 🐸",
+        "descripcion": "Se basa en la idea de que si debes comer una rana (realizar una tarea desagradable), es mejor hacerlo primero en el día. Consiste en identificar la tarea más importante y desafiante y abordarla de inmediato.",
+        "objetivo": "Objetivo: Superar la procrastinación al enfocarse en las tareas más importantes y difíciles primero, lo que puede aumentar la productividad y la sensación de logro."
+    },
+    {
+        "metodo": "Método Time Blocking ⏰",
+        "descripcion": "Implica asignar bloques específicos de tiempo en el calendario para realizar tareas o grupos de tareas relacionadas. Cada bloque de tiempo se reserva para una actividad específica.",
+        "objetivo": "Objetivo: Maximizar la productividad al estructurar el día en bloques dedicados a tareas específicas, lo que ayuda a mantener el enfoque y evitar distracciones."
+    },
+    {
+        "metodo": "Lluvia de ideas de tareas 🌧️",
+        "descripcion": "Consiste en realizar una lluvia de ideas de todas las tareas pendientes y luego organizarlas en listas o categorías. Luego, puedes abordarlas de manera más estructurada.",
+        "objetivo": "Objetivo: Capturar todas las tareas y proyectos pendientes, lo que te permite organizar y priorizar tu trabajo de manera más efectiva."
+    },
+    {
+        "metodo": "Principio de Pareto 📊",
+        "descripcion": "También conocido como la regla 80/20, establece que aproximadamente el 80 % de los resultados provienen del 20 % de las acciones. Este método te anima a identificar y enfocarte en las tareas más valiosas y productivas.",
+        "objetivo": "Objetivo: Maximizar la eficiencia y la efectividad al priorizar las tareas y actividades que generan los mayores resultados. Es decir que, al terminar el 20 % de toda tu lista de tareas diarias, logres el 80 % del impacto que puedes generar ese día."
+    }
+]

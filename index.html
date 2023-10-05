@@ -62,8 +62,11 @@
                     </div>
 
                     <div class="hidden ml-6 xl:flex xl:flex-col items-center w-300 opacity-0 transition ease-in-out delay-300" id="containerNotas">
-                        <div class="h-396 w-300 mb-2 p-2 rounded-md border-2 border-slate-100">
-                            <h2 class="text-white text-lg text-center"></h2>
+                        <div class="h-396 w-300 mb-2 p-2 rounded-md border-2 border-slate-100 relative">
+                            <button class="active:scale-90 duration-75 absolute right-2" id="button-metodo"><img class= "w-8" src="./img/flecha.png" alt=""></button>
+                            <p class="mt-2 text-white text-center" id="titulo-metodo">Fetch</p>
+                            <p class="mt-1" id="descripcion-metodo">El botoncito que está arriba a la derecha muestra en este div datos de un json. El json contiene información sobre distintos métodos/técnicas para la gestión del tiempo</p>
+                            <p class="mt-1" id="objetivo-metodo"></p>
                         </div>
                         <h2 class="mt-3 text-white text-lg text-center">Notas</h2>
                         <div class="lg:flex lg:justify-center">
