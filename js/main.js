@@ -251,10 +251,15 @@ function crearTareaDOM(objetoTarea) {
         eliminarTarea(liTarea);
         guardarTablerosEnLS();
         //eliminar tarea en DOM
-        liTarea.classList.add('opacity-0')
         setTimeout(()=>{
             liTarea.remove();
+            //liAgendar.remove();
         }, 600)
+        setTimeout(()=> {
+            if (seleccionarTablero().tareas.length == 0) {
+                ulTareas.innerHTML = 'No hay tareas';
+            }
+        }, 700)
         
         Toastify({
             text: "Tarea eliminada!",
@@ -279,7 +284,14 @@ function eliminarTarea(tarea) {
 }
 
 function mostrarTareas(tableroSeleccionado) {
-    tableroSeleccionado.tareas.forEach((tarea) => crearTareaDOM(tarea));
+    //tableroSeleccionado.tareas.forEach((tarea) => crearTareaDOM(tarea));
+    if (tableroSeleccionado.tareas.length > 0) {
+        ulTareas.innerHTML = '';
+        tableroSeleccionado.tareas.forEach((tarea) => crearTareaDOM(tarea));
+    }
+    else {
+        ulTareas.innerHTML = 'No hay tareas';
+    }
 
 }
 
@@ -289,17 +301,41 @@ function seleccionarTarea(tablero, idTarea) {
 }
 
 //eventos para crear tareas
+/*
 btnTarea.addEventListener('click', () => {
     if (inputTarea.value) {
         const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
         crearTareaDOM(nuevaTarea);
         inputTarea.value = null;
     }
+});*/
+btnTarea.addEventListener('click', () => {
+    if (inputTarea.value) {
+        if (seleccionarTablero().tareas.length == 0) {
+            ulTareas.innerHTML = '';
+        }
+        const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
+        crearTareaDOM(nuevaTarea);
+        inputTarea.value = null;
+    }
 });
 
+/*
 inputTarea.addEventListener('keyup', function (e) {
     if (e.key == 'Enter') {
         if (inputTarea.value) {
+            const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
+            crearTareaDOM(nuevaTarea);
+            inputTarea.value = null;
+        }
+    }
+});*/
+inputTarea.addEventListener('keyup', function (e) {
+    if (e.key == 'Enter') {
+        if (inputTarea.value) {
+            if (seleccionarTablero().tareas.length == 0) {
+                ulTareas.innerHTML = '';
+            }
             const nuevaTarea = crearObjetoTarea(`tarea-${contIdTareas}`, inputTarea.value);
             crearTareaDOM(nuevaTarea);
             inputTarea.value = null;
@@ -310,25 +346,55 @@ inputTarea.addEventListener('keyup', function (e) {
 
 /* filtros de tareas */
 //todas
+/*
 btnFiltroTodas.addEventListener('click', () => {
     ulTareas.innerHTML = "";
+    mostrarTareas(seleccionarTablero());
+})*/
+btnFiltroTodas.addEventListener('click', () => {
+    ulTareas.innerHTML = '';
     mostrarTareas(seleccionarTablero());
 })
 
 //pendientes
+/*
 btnFiltroPendientes.addEventListener('click', () => {
     ulTareas.innerHTML = "";
     const tablero = seleccionarTablero();
     const tareasPendientes = tablero.tareas.filter((tarea) => !tarea.realizada);
     tareasPendientes.forEach((tarea) => { crearTareaDOM(tarea) });
+})*/
+btnFiltroPendientes.addEventListener('click', () => {
+    ulTareas.innerHTML = '';
+    const tablero = seleccionarTablero();
+    const tareasPendientes = tablero.tareas.filter((tarea) => !tarea.realizada);
+    if (tareasPendientes.length > 0) {
+        tareasPendientes.forEach((tarea) => { crearTareaDOM(tarea) });
+    }
+    else {
+        ulTareas.innerHTML = 'No hay tareas pendientes';
+    }
 })
 
 //realizadas
+/*
 btnFiltroRealizadas.addEventListener('click', () => {
     ulTareas.innerHTML = "";
     const tablero = seleccionarTablero();
     const tareasRealizadas = tablero.tareas.filter((tarea) => tarea.realizada);
     tareasRealizadas.forEach((tarea) => { crearTareaDOM(tarea) });
+})*/
+
+btnFiltroRealizadas.addEventListener('click', () => {
+    ulTareas.innerHTML = '';
+    const tablero = seleccionarTablero();
+    const tareasRealizadas = tablero.tareas.filter((tarea) => tarea.realizada);
+    if (tareasRealizadas.length > 0) {
+        tareasRealizadas.forEach((tarea) => { crearTareaDOM(tarea) });
+    }
+    else {
+        ulTareas.innerHTML = 'No hay tareas realizadas';
+    }
 })
 
 
