@@ -384,13 +384,21 @@ const h2TituloMetodo = document.getElementById('titulo-metodo');
 const pDescripcionMetodo = document.getElementById('descripcion-metodo');
 const pObjetivoMetodo = document.getElementById('objetivo-metodo');
 const btnMetodo = document.getElementById('button-metodo');
+const spanLoader = document.getElementById('loader');
 
 btnMetodo.addEventListener('click', () => {
     mostrarMetodoAleatorio();
 })
 
-function mostrarMetodoAleatorio() {
-    fetch('/data.json')
+function mostrarMetodoAleatorio() {;
+    h2TituloMetodo.innerText ='';
+    pDescripcionMetodo.innerText = '';
+    pObjetivoMetodo.innerText = '';
+    spanLoader.classList.remove('hidden');
+    spanLoader.classList.add('flex', 'items-center', 'justify-center');
+    setTimeout(()=>{
+        spanLoader.classList.add('hidden');
+        fetch('/data.json')
         .then((res) => res.json())
         .then((data) => {
             if (data && data.length > 0) {
@@ -402,6 +410,17 @@ function mostrarMetodoAleatorio() {
                 pObjetivoMetodo.innerText = metodoAleatorio.objetivo;
             }
         })
+        .catch(e => {
+            Toastify({
+            text: "Error en la solicitud",
+            className: "error",
+            style: {
+                background: "linear-gradient(to right, #e93a2b, #fb887e)",
+                'border-radius': '5px',
+            }
+        }).showToast();
+        })
+    }, 1000);
 }
 
 
