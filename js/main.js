@@ -87,7 +87,7 @@ function crearObjetoTablero(id, titulo) {
 function crearTableroDOM(objetoTablero) {
     //crear li tablero
     let liTablero = document.createElement('li');
-    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'mt-2', 'bg-white', 'hover:scale-105', 'duration-75', 'transition-opacity', 'duration-700');
+    liTablero.classList.add('flex', 'w-300', 'gap-2', 'rounded-md', 'mb-3', 'mt-2', 'bg-white', 'hover:scale-105', 'duration-75');
     liTablero.setAttribute('id', `tablero-${objetoTablero.id}`)
     ulTableros.append(liTablero);
 
@@ -127,10 +127,7 @@ function crearTableroDOM(objetoTablero) {
         totalTableros.splice(indexTableroSeleccionado, 1);
         guardarTablerosEnLS();
         //eliminar tablero en DOM
-        liTablero.classList.add('opacity-0')
-        setTimeout(() => {
-            liTablero.remove();
-        }, 500)
+        liTablero.remove();
         divcontainerTareas.classList.add('opacity-0');
         divcontainerNotas.classList.add('opacity-0');
         divcontainerTableroSeleccionado.classList.add('invisible');
@@ -251,6 +248,7 @@ function crearTareaDOM(objetoTarea) {
         eliminarTarea(liTarea);
         guardarTablerosEnLS();
         //eliminar tarea en DOM
+        liTarea.classList.add('opacity-0')
         setTimeout(() => {
             liTarea.remove();
         }, 600)
@@ -390,36 +388,37 @@ btnMetodo.addEventListener('click', () => {
     mostrarMetodoAleatorio();
 })
 
-function mostrarMetodoAleatorio() {;
-    h2TituloMetodo.innerText ='';
+function mostrarMetodoAleatorio() {
+    ;
+    h2TituloMetodo.innerText = '';
     pDescripcionMetodo.innerText = '';
     pObjetivoMetodo.innerText = '';
     spanLoader.classList.remove('hidden');
     spanLoader.classList.add('flex', 'items-center', 'justify-center');
-    setTimeout(()=>{
+    setTimeout(() => {
         spanLoader.classList.add('hidden');
         fetch('/data.json')
-        .then((res) => res.json())
-        .then((data) => {
-            if (data && data.length > 0) {
-                const indexAleatorio = Math.floor(Math.random() * data.length);
-                const metodoAleatorio = data[indexAleatorio];
+            .then((res) => res.json())
+            .then((data) => {
+                if (data && data.length > 0) {
+                    const indexAleatorio = Math.floor(Math.random() * data.length);
+                    const metodoAleatorio = data[indexAleatorio];
 
-                h2TituloMetodo.innerText = metodoAleatorio.metodo;
-                pDescripcionMetodo.innerText = metodoAleatorio.descripcion;
-                pObjetivoMetodo.innerText = metodoAleatorio.objetivo;
-            }
-        })
-        .catch(e => {
-            Toastify({
-            text: "Error en la solicitud",
-            className: "error",
-            style: {
-                background: "linear-gradient(to right, #e93a2b, #fb887e)",
-                'border-radius': '5px',
-            }
-        }).showToast();
-        })
+                    h2TituloMetodo.innerText = metodoAleatorio.metodo;
+                    pDescripcionMetodo.innerText = metodoAleatorio.descripcion;
+                    pObjetivoMetodo.innerText = metodoAleatorio.objetivo;
+                }
+            })
+            .catch(e => {
+                Toastify({
+                    text: "Error en la solicitud",
+                    className: "error",
+                    style: {
+                        background: "linear-gradient(to right, #e93a2b, #fb887e)",
+                        'border-radius': '5px',
+                    }
+                }).showToast();
+            })
     }, 1000);
 }
 

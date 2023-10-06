@@ -726,10 +726,6 @@ video {
   gap: 1rem;
 }
 
-.self-center {
-  align-self: center;
-}
-
 .overflow-y-auto {
   overflow-y: auto;
 }
@@ -1002,6 +998,10 @@ video {
 
 .hover\:opacity-100:hover {
   opacity: 1;
+}
+
+.hover\:duration-75:hover {
+  transition-duration: 75ms;
 }
 
 .focus\:opacity-100:focus {
