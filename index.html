@@ -13,12 +13,12 @@
     <title>Worktodo</title>
 </head>
 
-<body class="font-overpass">
+<body class="font-overpass ">
     <main class="flex justify-center">
 
         <div class="w-360 mt-2 mb-2 md:w-760 md:flex md:justify-around lg: justify-between lg:w-1024 xl:mt-8 xl:w-1400">
             <!--Tableros-->
-            <section class="w-360 flex flex-wrap rounded-md shadow-md  shadow-slate-300 md:h-796 bg-gradient-to-t from-violet-300 to-indigo-400">
+            <section class="w-360 flex flex-wrap rounded-md  md:h-796 bg-gradient-to-t from-violet-300 to-indigo-400">
                 
                 <div class=" w-full h-32 pt-5  rounded-t-md  ">
                     <h1 class="text-center text-4xl text-slate-100 font-bold ">Worktodo</h1>
@@ -39,7 +39,7 @@
             </section>
 
             <!--Tablero seleccionado-->
-            <section class="flex mt-4 p-5 pb-6 h-500 w-360 rounded-md bg-gradient-to-t from-indigo-400 to-violet-300 shadow-md shadow-slate-300 md:mt-0 md:h-796 lg:w-632  xl:justify-center xl:w-900 2xl:1024 invisible" id="containerTableroSeleccionado">
+            <section class="flex mt-4 p-5 pb-6 h-500 w-360 rounded-md bg-gradient-to-t from-indigo-400 to-violet-300 md:mt-0 md:h-796 lg:w-632  xl:justify-center xl:w-900 2xl:1024 invisible" id="containerTableroSeleccionado">
                 
                     <div class="h-32 w-360 mt-4 flex flex-wrap lg:mt-0 lg:w-500 opacity-0 transition ease-in-out delay-300" id="containerTareas">
                         <h2 class="h-5 mb-8 w-80 text-2xl text-slate-100 lg:mt-1 lg:w-500" id="tituloTablero"></h2>
@@ -63,27 +63,45 @@
                         </div>                    
                     </div>
 
-                    <div class="hidden ml-6 xl:flex xl:flex-col items-center w-300 opacity-0 transition ease-in-out delay-300" id="containerNotas">
-                        <div class="h-396 w-300 mb-2 p-2 rounded-md border-2 border-slate-100 relative">
-                            <button class="active:scale-90 duration-75 absolute right-2" id="button-metodo"><img class= "w-8" src="./img/flecha.png" alt=""></button>
-                            <p class="mt-2 text-white text-center" id="titulo-metodo">Fetch</p>
-                            <p class="mt-1" id="descripcion-metodo">El botoncito que está arriba a la derecha muestra en este div datos de un json. El json contiene información sobre distintos métodos/técnicas para la gestión del tiempo</p>
-                            <p class="mt-1" id="objetivo-metodo"></p>
-                            <div class="hidden h-300" id="loader">
-                                <div class="loader"></div>
+                    <div class="hidden ml-9 xl:flex xl:flex-col items-center w-300 opacity-0 transition ease-in-out delay-300" id="containerNotas">
+                        <div class="bg-white w-300 rounded-md">
+                            <div class="p-5 flex items-center justify-between">
+                                <p class="text-lg" id="fecha-actual"></p>
+                                <div class="btnMeses">
+                                    <button class="bg-slate-100 p-1 rounded-xl hover:bg-slate-200 active:scale-90 duration-75 btnMes" id="mesAnterior"><img class= "h-4" src="./img/anterior.png" alt="eliminar"></button>
+                                    <button class="bg-slate-100 p-1 rounded-xl hover:bg-slate-200 active:scale-90 duration-75 btnMes" id="mesSiguiente"><img class= "h-4" src="./img/siguiente.png" alt="eliminar"></button>
+                                </div>
                             </div>
                             
+                            <div class="w-300 p-2 pb-5 calendario">
+                                <ul class=" flex flex-wrap text-center semanas "> 
+                                    <li class="">Lun</li>
+                                    <li class="">Mar</li>
+                                    <li class="">Mié</li>
+                                    <li class="">Jue</li>
+                                    <li class="">Vie</li>
+                                    <li class="">Sáb</li>
+                                    <li class="">Dom</li>
+                                </ul>
+    
+                                <ul class="flex flex-wrap text-center dias" id="dias"></ul>
+                            </div>
                         </div>
-                        <h2 class="mt-3 text-white text-lg text-center">Notas</h2>
-                        <div class="lg:flex lg:justify-center">
-                            <textarea class="h-300 w-300 mt-2 ml-2 p-2 bg-white rounded-md resize-none focus:outline-none text-gray-800 placeholder:text-gray-400 placeholder:opacity-70" id="notas" placeholder="Clickeame para escribir..."></textarea>
+                        <h2 class="mt-2 text-white text-lg text-center">Notas</h2>
+                        <div class="lg:flex lg:justify-center ">
+                            <textarea class=" h-280 w-300 mt-2 ml-2 p-2 bg-white rounded-md resize-none focus:outline-none text-gray-800 placeholder:text-gray-400 placeholder:opacity-70" id="notas" placeholder="Clickeame para escribir..."></textarea>
                         </div>
                     </div>
             </section>
         </div>
     </main>
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="./js/calendario.js"></script>
+    <script src="./js/notas.js"></script>
+    <script src="./js/tableros.js"></script>
+    <script src="./js/tareas.js"></script>
     <script src="./js/main.js"></script>
 </body>
 
