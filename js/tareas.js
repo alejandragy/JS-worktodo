@@ -16,6 +16,13 @@ const ulTareas = document.getElementById('listaTareas');
 const btnFiltroTodas = document.getElementById('btnFiltroTodas');
 const btnFiltroPendientes = document.getElementById('btnFiltroPendientes');
 const btnFiltroRealizadas = document.getElementById('btnFiltroRealizadas');
+const divModalBg = document.getElementById('modal-bg');
+const divModal = document.getElementById('modal');
+const btnModalAgendar = document.getElementById('btnAgendar');
+const btnModalCancelar = document.getElementById('btnCancelar');
+const inputModalDia = document.getElementById('inputDia');
+const inputModalMes = document.getElementById('inputMes');
+const inputModalAnio = document.getElementById('inputAnio');
 
 
 let contIdTareas = 0;
@@ -25,6 +32,7 @@ let realizada = './img/realizada.png';
 let pendiente = './img/pendiente.png';
 let borrarBlanco = './img/borrar.png';
 let calendario = './img/calendario.png';
+let liSeleccionado;
 
 
 //funciones
@@ -61,7 +69,7 @@ function crearTareaDOM(objetoTarea) {
     //crear botón agendar 
     let buttonAgendar = document.createElement('button');
     buttonAgendar.classList.add('mr-3', 'opacity-30', 'hover:opacity-100');
-    buttonAgendar.innerHTML = `<img class= "h-6 w-6" src="${calendario}" alt="eliminar">`;
+    buttonAgendar.innerHTML = `<img class= "h-6 w-6" src="${calendario}" alt="agendar">`;
     liTarea.append(buttonAgendar);
 
     //crear botón eliminar
@@ -93,6 +101,18 @@ function crearTareaDOM(objetoTarea) {
             pTarea.classList.remove('line-through');
         }
     })
+
+    //evento para agendar tareas
+    buttonAgendar.addEventListener('click', () =>{
+        const liTarea = buttonEstado.parentNode;
+        divModalBg.classList.remove('hidden');
+        divModalBg.classList.remove('opacity-0')
+        divModal.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
+        liSeleccionado = liTarea.id;
+
+        
+    })
+
 
     //evento para eliminar tareas
     buttonEliminar.addEventListener('click', () => {
@@ -175,6 +195,21 @@ inputTarea.addEventListener('keyup', function (e) {
     }
 });
 
+//eventos del modal
+btnModalAgendar.addEventListener('click', () =>{
+    if (inputModalDia.value && inputModalMes.value && inputModalAnio.value){
+        tableroSeleccionado = seleccionarTablero();
+        tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liSeleccionado);
+        tareaSeleccionada.fecha = `${inputModalDia.value}-${inputModalMes.value}-${inputModalAnio.value}`;
+        guardarTablerosEnLS();
+        console.log(totalTableros);
+        divModalBg.classList.add('hidden');
+    }
+})
+
+btnModalCancelar.addEventListener('click', () => {
+    divModalBg.classList.add('hidden');
+})
 
 /* filtros de tareas */
 //todas

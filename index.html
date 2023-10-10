@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/output.css" >
+    <link rel="stylesheet" href="./src/output.css">
     <link rel="stylesheet" href="./src/styles.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
         <div class="w-360 mt-2 mb-2 md:w-760 md:flex md:justify-around lg: justify-between lg:w-1024 xl:mt-8 xl:w-1400">
             <!--Tableros-->
             <section class="w-360 flex flex-wrap rounded-md  md:h-796 bg-gradient-to-t from-violet-300 to-indigo-400">
-                
+
                 <div class=" w-full h-32 pt-5  rounded-t-md  ">
                     <h1 class="text-center text-4xl text-slate-100 font-bold ">Worktodo</h1>
                     <div class=" mt-4 flex gap-2 justify-center">
@@ -33,69 +33,142 @@
                     </div>
                 </div>
 
-                <ul class="w-full flex flex-col items-center h-80 pb-5 overflow-y-auto mt-2 rounded-b-lg  md:h-632 md:mt-0" id="listaTableros" >
-                    
+                <ul class="w-full flex flex-col items-center h-80 pb-5 overflow-y-auto mt-2 rounded-b-lg  md:h-632 md:mt-0"
+                    id="listaTableros">
+
                 </ul>
             </section>
 
             <!--Tablero seleccionado-->
-            <section class="flex mt-4 p-5 pb-6 h-500 w-360 rounded-md bg-gradient-to-t from-indigo-400 to-violet-300 md:mt-0 md:h-796 lg:w-632  xl:justify-center xl:w-900 2xl:1024 invisible" id="containerTableroSeleccionado">
-                
-                    <div class="h-32 w-360 mt-4 flex flex-wrap lg:mt-0 lg:w-500 opacity-0 transition ease-in-out delay-300" id="containerTareas">
-                        <h2 class="h-5 mb-8 w-80 text-2xl text-slate-100 lg:mt-1 lg:w-500" id="tituloTablero"></h2>
-                        <div class="flex justify-center gap-2 mt-6 h-12 lg:mt-0">
-                            <input
-                                class="w-280 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 placeholder:opacity-70 focus:outline-none bg-transparent lg:w-460 " id="inputTarea"
-                                type="text" maxlength="70" placeholder="Agregar una tarea">
-                            
-                                <button
-                                class=" w-9 h-9 rounded-md font-bold text-violet-300  bg-slate-100  border-slate-100 border-2 active:scale-90 duration-75" id="btnTarea">+</button>
-                        </div>
-                        <div class="w-80 flex items-center gap-4 mb-4 mt-5 text-white xl:mt-2 xl:w-500">
-                            <p class="text-xl">Filtros -</p>
-                            <button class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75" id="btnFiltroTodas"><img class="h-5" src="./img/infinito.png" alt=""></button>
-                            <button class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75" id="btnFiltroPendientes"><img class="h-5" src="./img/pendiente-violet.png" alt=""></button>
-                            <button class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75" id="btnFiltroRealizadas"><img class="h-5" src="./img/realizada-violet.png" alt=""></button>
-                        </div>
-                        <div class="  h-80 flex justify-center flex-col lg:w-500 lg:h-632">
-                            <ul class="h-80 w-80 mb-4 overflow-y-scroll lg:w-500 lg:h-570 " id="listaTareas">
-                            </ul>
-                        </div>                    
-                    </div>
 
-                    <div class="hidden ml-9 xl:flex xl:flex-col items-center w-300 opacity-0 transition ease-in-out delay-300" id="containerNotas">
-                        <div class="bg-white w-300 rounded-md">
-                            <div class="p-5 flex items-center justify-between">
-                                <p class="text-lg" id="fecha-actual"></p>
-                                <div class="btnMeses">
-                                    <button class="bg-slate-100 p-1 rounded-xl hover:bg-slate-200 active:scale-90 duration-75 btnMes" id="mesAnterior"><img class= "h-4" src="./img/anterior.png" alt="eliminar"></button>
-                                    <button class="bg-slate-100 p-1 rounded-xl hover:bg-slate-200 active:scale-90 duration-75 btnMes" id="mesSiguiente"><img class= "h-4" src="./img/siguiente.png" alt="eliminar"></button>
+            <section
+                class="flex mt-4 p-5 pb-6 h-500 w-360 rounded-md bg-gradient-to-t from-indigo-400 to-violet-300 md:mt-0 md:h-796 lg:w-632  xl:justify-center xl:w-900 2xl:1024 invisible"
+                id="containerTableroSeleccionado">
+
+                <div class="h-32 w-360 mt-4 flex flex-wrap lg:mt-0 lg:w-500 opacity-0 transition ease-in-out delay-300"
+                    id="containerTareas">
+                    <h2 class="h-5 mb-8 w-80 text-2xl text-slate-100 lg:mt-1 lg:w-500" id="tituloTablero"></h2>
+                    <div class="flex justify-center gap-2 mt-6 h-12 lg:mt-0">
+                        <input
+                            class="w-280 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 placeholder:opacity-70 focus:outline-none bg-transparent lg:w-460 "
+                            id="inputTarea" type="text" maxlength="70" placeholder="Agregar una tarea">
+
+                        <button
+                            class=" w-9 h-9 rounded-md font-bold text-violet-300  bg-slate-100  border-slate-100 border-2 active:scale-90 duration-75"
+                            id="btnTarea">+</button>
+                    </div>
+                    <div class="w-80 flex items-center gap-4 mb-4 mt-5 text-white xl:mt-2 xl:w-500">
+                        <p class="text-xl">Filtros -</p>
+                        <button
+                            class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75"
+                            id="btnFiltroTodas"><img class="h-5" src="./img/infinito.png" alt=""></button>
+                        <button
+                            class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75"
+                            id="btnFiltroPendientes"><img class="h-5" src="./img/pendiente-violet.png" alt=""></button>
+                        <button
+                            class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75"
+                            id="btnFiltroRealizadas"><img class="h-5" src="./img/realizada-violet.png" alt=""></button>
+                    </div>
+                    <div class="  h-80 flex justify-center flex-col lg:w-500 lg:h-632">
+                        <ul class="h-80 w-80 mb-4 overflow-y-scroll lg:w-500 lg:h-570 " id="listaTareas">
+                        </ul>
+
+                        
+                        <div class="relative z-10 hidden" id="modal-bg" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                            <!--
+                                Background backdrop, show/hide based on modal state.
+                            
+                                Entering: "ease-out duration-300"
+                                    From: "opacity-0"
+                                    To: "opacity-100"
+                                Leaving: "ease-in duration-200"
+                                    From: "opacity-100"
+                                    To: "opacity-0"
+                            -->   
+                            <div class="fixed inset-0 bg-zinc-600 bg-opacity-40 transition-opacity"></div>
+
+                            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 ease-out duration-300 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" id="modal">
+                                    <!--
+                                    Modal panel, show/hide based on modal state.
+
+                                    Entering: "ease-out duration-300"
+                                        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                        To: "opacity-100 translate-y-0 sm:scale-100"
+                                    Leaving: "ease-in duration-200"
+                                        From: "opacity-100 translate-y-0 sm:scale-100"
+                                        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                    -->
+                                    <div class="relative transform overflow-hidden rounded-md bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                        <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                            <div class="sm:flex sm:items-start">
+                                                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                                    <h3 class="text-base font-semibold leading-6 text-gray-900"
+                                                        id="modal-title">Agendar tarea</h3>
+                                                    <div class="mt-2">
+                                                        <input class="w-16 p-2 focus:outline-none" type="number" placeholder="dd" id="inputDia">
+                                                        <input class="w-16 p-2 focus:outline-none" type="number" placeholder="mm" id="inputMes">
+                                                        <input class="w-28 p-2 focus:outline-none" type="number" placeholder="aaaa" id="inputAnio">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                            <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 sm:ml-3 sm:w-auto active:scale-90 duration-75" id="btnAgendar">Agendar</button>
+                                            <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-slate-100 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm hover:bg-slate-200 sm:mt-0 sm:w-auto  active:scale-90 duration-75" id="btnCancelar">Cancelar</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="w-300 p-2 pb-5 calendario">
-                                <ul class=" flex flex-wrap text-center semanas "> 
-                                    <li class="">Lun</li>
-                                    <li class="">Mar</li>
-                                    <li class="">Mié</li>
-                                    <li class="">Jue</li>
-                                    <li class="">Vie</li>
-                                    <li class="">Sáb</li>
-                                    <li class="">Dom</li>
-                                </ul>
-    
-                                <ul class="flex flex-wrap text-center dias" id="dias"></ul>
+                        </div>
+                        
+
+
+
+                    </div>
+                </div>
+
+                <div class="hidden ml-9 xl:flex xl:flex-col items-center w-300 opacity-0 transition ease-in-out delay-300"
+                    id="containerNotas">
+                    <div class="bg-white w-300 rounded-md">
+                        <div class="p-5 flex items-center justify-between">
+                            <p class="text-lg" id="fecha-actual"></p>
+                            <div class="btnMeses">
+                                <button
+                                    class="bg-slate-100 p-1 rounded-xl hover:bg-slate-200 active:scale-90 duration-75 btnMes"
+                                    id="mesAnterior"><img class="h-4" src="./img/anterior.png" alt="eliminar"></button>
+                                <button
+                                    class="bg-slate-100 p-1 rounded-xl hover:bg-slate-200 active:scale-90 duration-75 btnMes"
+                                    id="mesSiguiente"><img class="h-4" src="./img/siguiente.png"
+                                        alt="eliminar"></button>
                             </div>
                         </div>
-                        <h2 class="mt-2 text-white text-lg text-center">Notas</h2>
-                        <div class="lg:flex lg:justify-center ">
-                            <textarea class=" h-280 w-300 mt-2 ml-2 p-2 bg-white rounded-md resize-none focus:outline-none text-gray-800 placeholder:text-gray-400 placeholder:opacity-70" id="notas" placeholder="Clickeame para escribir..."></textarea>
+
+                        <div class="w-300 p-2 pb-5 calendario">
+                            <ul class=" flex flex-wrap text-center semanas ">
+                                <li class="">Lun</li>
+                                <li class="">Mar</li>
+                                <li class="">Mié</li>
+                                <li class="">Jue</li>
+                                <li class="">Vie</li>
+                                <li class="">Sáb</li>
+                                <li class="">Dom</li>
+                            </ul>
+
+                            <ul class="flex flex-wrap text-center dias" id="dias"></ul>
                         </div>
                     </div>
+                    <h2 class="mt-2 text-white text-lg text-center">Notas</h2>
+                    <div class="lg:flex lg:justify-center ">
+                        <textarea
+                            class=" h-280 w-300 mt-2 ml-2 p-2 bg-white rounded-md resize-none focus:outline-none text-gray-800 placeholder:text-gray-400 placeholder:opacity-70"
+                            id="notas" placeholder="Clickeame para escribir..."></textarea>
+                    </div>
+                </div>
             </section>
         </div>
     </main>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./js/calendario.js"></script>

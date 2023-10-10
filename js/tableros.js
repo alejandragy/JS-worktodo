@@ -95,13 +95,6 @@ function crearTableroDOM(objetoTablero) {
 btnTablero.addEventListener('click', () => {
     if (inputTablero.value) {
         crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-        if (totalTableros.length == 1) {
-            Swal.fire({
-                title: 'Creaste tu primer tablero!',
-                text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
-                icon: 'success',
-            })
-        }
     }
 });
 
@@ -109,13 +102,6 @@ inputTablero.addEventListener('keyup', function (e) {
     if (e.key == 'Enter') {
         if (inputTablero.value) {
             crearTableroDOM(crearObjetoTablero(`tablero-${contIdTableros}`, inputTablero.value)); inputTablero.value = null;
-            if (totalTableros.length == 1) {
-                Swal.fire({
-                    title: 'Creaste tu primer tablero!',
-                    text: 'Selecciona el nuevo tablero para ver su detalle y empezar a agregar tareas',
-                    icon: 'success',
-                })
-            }
         }
     }
 });
