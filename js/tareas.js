@@ -20,9 +20,7 @@ const divModalBg = document.getElementById('modal-bg');
 const divModal = document.getElementById('modal');
 const btnModalAgendar = document.getElementById('btnAgendar');
 const btnModalCancelar = document.getElementById('btnCancelar');
-const inputModalDia = document.getElementById('inputDia');
-const inputModalMes = document.getElementById('inputMes');
-const inputModalAnio = document.getElementById('inputAnio');
+const inputFecha = document.getElementById('inputFecha');
 
 
 let contIdTareas = 0;
@@ -109,8 +107,13 @@ function crearTareaDOM(objetoTarea) {
         divModalBg.classList.remove('opacity-0')
         divModal.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
         liSeleccionado = liTarea.id;
-
-        
+        tareaSeleccionada = seleccionarTarea(seleccionarTablero(), liTarea.id);
+        if (tareaSeleccionada.fecha !=null){
+            inputFecha.value = tareaSeleccionada.fecha
+        }
+        else{
+            inputFecha.value = '';
+        }
     })
 
 
@@ -195,16 +198,13 @@ inputTarea.addEventListener('keyup', function (e) {
     }
 });
 
-//eventos del modal
+//eventos para agendar tarea desde modal
 btnModalAgendar.addEventListener('click', () =>{
-    if (inputModalDia.value && inputModalMes.value && inputModalAnio.value){
         tableroSeleccionado = seleccionarTablero();
         tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liSeleccionado);
-        tareaSeleccionada.fecha = `${inputModalDia.value}-${inputModalMes.value}-${inputModalAnio.value}`;
+        tareaSeleccionada.fecha = `${inputFecha.value}`;
         guardarTablerosEnLS();
-        console.log(totalTableros);
         divModalBg.classList.add('hidden');
-    }
 })
 
 btnModalCancelar.addEventListener('click', () => {

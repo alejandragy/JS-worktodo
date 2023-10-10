@@ -4,7 +4,7 @@ const btnMeses = document.querySelectorAll('.btnMes')
 
 
 let fecha = new Date()
-let fechaLocal = fecha.toLocaleDateString();
+//let fechaLocal = fecha.toLocaleDateString();
 let anio = fecha.getFullYear();
 let mes = fecha.getMonth();
 let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
