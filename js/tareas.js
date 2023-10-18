@@ -110,7 +110,7 @@ function crearTareaDOM(objetoTarea) {
         divAgendarModal.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
         liSeleccionado = liTarea.id;
         tareaSeleccionada = seleccionarTarea(seleccionarTablero(), liTarea.id);
-        if (tareaSeleccionada.fecha != null) {
+        if (tareaSeleccionada.fecha != null && tareaSeleccionada.fecha != 'NaN-NaN-NaN') {
             const partesFecha = tareaSeleccionada.fecha.split('-');
             fecha = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0]}`;
             btnReagendarModal.classList.remove('hidden');
@@ -124,6 +124,7 @@ function crearTareaDOM(objetoTarea) {
             btnAgendarModal.classList.remove('hidden');
             inputFecha.classList.remove('hidden');
             pFecha.classList.add('hidden');
+            inputFecha.value = '';
         }
     })
 
