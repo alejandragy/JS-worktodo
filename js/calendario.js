@@ -4,7 +4,6 @@ const btnMeses = document.querySelectorAll('.btnMes')
 
 
 let fecha = new Date()
-//let fechaLocal = fecha.toLocaleDateString();
 let anio = fecha.getFullYear();
 let mes = fecha.getMonth();
 let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
@@ -23,12 +22,7 @@ function mostarCalendario() {
     }
 
     for (i = 1; i <= ultimaFechaMes; i++) {
-        const buttonId = `${i}-${mes + 1}-${anio}`;
-        liDias += `<li><button class="w-8 h-8  rounded-2xl hover:bg-slate-100 focus:bg-indigo-400" id="${i}-${mes + 1}-${anio}">${i}</button></li>`;
-
-        /*document.buttonId.addEventListener('click', () => {
-            //mostrar tareas del dia elegido
-        })*/
+        liDias += `<li><button class="w-8 h-8  rounded-2xl hover:bg-slate-100 focus:bg-indigo-400" id="${anio}-${mes + 1}-${i}">${i}</button></li>`;
     }
 
     for (i = ultimoDiaMes; i < 7; i++) {
@@ -44,7 +38,6 @@ function mostarCalendario() {
 btnMeses.forEach(btn => {
     btn.addEventListener('click', () => {
         mes = btn.id === "mesAnterior" ? mes - 1 : mes + 1;
-
         if (mes < 0 || mes > 11) {
             fecha = new Date(anio, mes);
             anio = fecha.getFullYear()
@@ -56,3 +49,20 @@ btnMeses.forEach(btn => {
         mostarCalendario();
     })
 })
+
+ulDias.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target.tagName === 'BUTTON') {
+        const diaSeleccionado = target.id;
+        const tareas = seleccionarTablero().tareas
+        const fechas = tareas.filter((tarea) => tarea.fecha == diaSeleccionado);
+        ulTareas.innerHTML = '';
+        if (fechas.length > 0) {
+            fechas.forEach((tarea) => { crearTareaDOM(tarea) });
+        }
+        else{
+            ulTareas.innerHTML = 'No hay tareas programadas para esta fecha';
+        }
+    }
+
+});

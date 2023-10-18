@@ -1,4 +1,4 @@
-const divcontainerNotas = document.getElementById('containerNotas');
+const divLateral = document.getElementById('lateral__container');
 const txtNotas = document.getElementById('notas');
 
 

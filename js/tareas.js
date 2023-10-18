@@ -8,19 +8,21 @@ class Tarea {
 }
 
 
-const divcontainerTableroSeleccionado = document.getElementById('containerTableroSeleccionado')
-const divcontainerTareas = document.getElementById('containerTareas');
-const inputTarea = document.getElementById('inputTarea');
-const btnTarea = document.getElementById('btnTarea');
-const ulTareas = document.getElementById('listaTareas');
-const btnFiltroTodas = document.getElementById('btnFiltroTodas');
-const btnFiltroPendientes = document.getElementById('btnFiltroPendientes');
-const btnFiltroRealizadas = document.getElementById('btnFiltroRealizadas');
-const divModalBg = document.getElementById('modal-bg');
-const divModal = document.getElementById('modal');
-const btnModalAgendar = document.getElementById('btnAgendar');
-const btnModalCancelar = document.getElementById('btnCancelar');
-const inputFecha = document.getElementById('inputFecha');
+const divTableroSeleccionado = document.getElementById('tablero-seleccionado__container')
+const divTareas = document.getElementById('tareas__container');
+const inputTarea = document.getElementById('tarea__input');
+const btnTarea = document.getElementById('tarea__btn');
+const ulTareas = document.getElementById('tareas__lista');
+const btnFiltroTodas = document.getElementById('filtro-todas__btn');
+const btnFiltroPendientes = document.getElementById('filtro-pendientes__btn');
+const btnFiltroRealizadas = document.getElementById('filtro-realizadas__btn');
+const divAgendarModalBg = document.getElementById('agendar-modal__bg');
+const divAgendarModal = document.getElementById('agendar-modal');
+const btnAgendarModal = document.getElementById('agendar-modal-aceptar__btn');
+const btnCancelarModal = document.getElementById('agendar-modal-cancelar__btn');
+const btnReagendarModal = document.getElementById('agendar-modal-reagendar__btn');
+const inputFecha = document.getElementById('fecha__input');
+const pFecha = document.getElementById('fecha__texto');
 
 
 let contIdTareas = 0;
@@ -101,18 +103,27 @@ function crearTareaDOM(objetoTarea) {
     })
 
     //evento para agendar tareas
-    buttonAgendar.addEventListener('click', () =>{
+    buttonAgendar.addEventListener('click', () => {
         const liTarea = buttonEstado.parentNode;
-        divModalBg.classList.remove('hidden');
-        divModalBg.classList.remove('opacity-0')
-        divModal.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
+        divAgendarModalBg.classList.remove('hidden');
+        divAgendarModalBg.classList.remove('opacity-0')
+        divAgendarModal.classList.add('opacity-100', 'translate-y-0', 'sm:scale-100');
         liSeleccionado = liTarea.id;
         tareaSeleccionada = seleccionarTarea(seleccionarTablero(), liTarea.id);
-        if (tareaSeleccionada.fecha !=null){
-            inputFecha.value = tareaSeleccionada.fecha
+        if (tareaSeleccionada.fecha != null) {
+            const partesFecha = tareaSeleccionada.fecha.split('-');
+            fecha = `${partesFecha[2]}/${partesFecha[1]}/${partesFecha[0]}`;
+            btnReagendarModal.classList.remove('hidden');
+            btnAgendarModal.classList.add('hidden');
+            inputFecha.classList.add('hidden');
+            pFecha.classList.remove('hidden');
+            pFecha.innerText = `Tarea programada para el día ${fecha}`
         }
-        else{
-            inputFecha.value = '';
+        else {
+            btnReagendarModal.classList.add('hidden');
+            btnAgendarModal.classList.remove('hidden');
+            inputFecha.classList.remove('hidden');
+            pFecha.classList.add('hidden');
         }
     })
 
@@ -199,16 +210,28 @@ inputTarea.addEventListener('keyup', function (e) {
 });
 
 //eventos para agendar tarea desde modal
-btnModalAgendar.addEventListener('click', () =>{
-        tableroSeleccionado = seleccionarTablero();
-        tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liSeleccionado);
-        tareaSeleccionada.fecha = `${inputFecha.value}`;
-        guardarTablerosEnLS();
-        divModalBg.classList.add('hidden');
+btnAgendarModal.addEventListener('click', () => {
+    tableroSeleccionado = seleccionarTablero();
+    tareaSeleccionada = seleccionarTarea(tableroSeleccionado, liSeleccionado);
+    const fechaPartes = inputFecha.value.split('-');
+    const fechaAnio = parseInt(fechaPartes[0], 10).toString();
+    const fechaMes = parseInt(fechaPartes[1], 10).toString();
+    const fechaDia = parseInt(fechaPartes[2], 10).toString();
+    const fecha = `${fechaAnio}-${fechaMes}-${fechaDia}`;
+    tareaSeleccionada.fecha = `${fecha}`;
+    guardarTablerosEnLS();
+    divAgendarModalBg.classList.add('hidden');
 })
 
-btnModalCancelar.addEventListener('click', () => {
-    divModalBg.classList.add('hidden');
+btnReagendarModal.addEventListener('click', () => {
+    btnReagendarModal.classList.add('hidden');
+    btnAgendarModal.classList.remove('hidden');
+    inputFecha.classList.remove('hidden');
+    pFecha.classList.add('hidden');
+})
+
+btnCancelarModal.addEventListener('click', () => {
+    divAgendarModalBg.classList.add('hidden');
 })
 
 /* filtros de tareas */

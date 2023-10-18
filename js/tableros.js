@@ -8,10 +8,10 @@ class Tablero {
 }
 
 
-const inputTablero = document.getElementById('inputTablero');
-const btnTablero = document.getElementById('btnTablero');
-const ulTableros = document.getElementById('listaTableros');
-const tituloTablero = document.getElementById('tituloTablero');
+const inputTablero = document.getElementById('tablero__input');
+const btnTablero = document.getElementById('tablero__btn');
+const ulTableros = document.getElementById('tableros__lista');
+const tituloTablero = document.getElementById('tablero-seleccionado__titulo');
 
 
 let totalTableros;
@@ -53,9 +53,9 @@ function crearTableroDOM(objetoTablero) {
 
     //evento para seleccionar tablero
     buttonTablero.addEventListener('click', () => {
-        divcontainerTableroSeleccionado.classList.remove('invisible');
-        divcontainerTareas.classList.remove('opacity-0')
-        divcontainerNotas.classList.remove('opacity-0');
+        divTableroSeleccionado.classList.remove('invisible');
+        divTareas.classList.remove('opacity-0')
+        divLateral.classList.remove('opacity-0');
         seleccionarTablero()
         tituloTablero.innerText = `${objetoTablero.titulo}`
         idTableroSeleccionado = objetoTablero.id;
@@ -76,9 +76,9 @@ function crearTableroDOM(objetoTablero) {
         guardarTablerosEnLS();
         //eliminar tablero en DOM
         liTablero.remove();
-        divcontainerTareas.classList.add('opacity-0');
-        divcontainerNotas.classList.add('opacity-0');
-        divcontainerTableroSeleccionado.classList.add('invisible');
+        divTareas.classList.add('opacity-0');
+        divLateral.classList.add('opacity-0');
+        divTableroSeleccionado.classList.add('invisible');
         Toastify({
             text: "Tablero eliminado!",
             className: "info",

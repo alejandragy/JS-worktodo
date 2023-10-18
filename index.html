@@ -25,16 +25,16 @@
                     <div class=" mt-4 flex gap-2 justify-center">
                         <input
                             class="w-64 h-9 text-lg text-gray-800 border-slate-100 border-b-2  focus:outline-none placeholder:text-slate-100 bg-transparent placeholder:opacity-70"
-                            type="text" placeholder="Agregar un tablero" id="inputTablero">
+                            type="text" placeholder="Agregar un tablero" id="tablero__input">
                         <button
                             class="w-9 h-9 rounded-md font-bold text-indigo-400  bg-slate-100  border-slate-100 border-2  active:scale-90 duration-75"
-                            id="btnTablero"> +
+                            id="tablero__btn"> +
                         </button>
                     </div>
                 </div>
 
                 <ul class="w-full flex flex-col items-center h-80 pb-5 overflow-y-auto mt-2 rounded-b-lg  md:h-632 md:mt-0"
-                    id="listaTableros">
+                    id="tableros__lista">
 
                 </ul>
             </section>
@@ -43,74 +43,56 @@
 
             <section
                 class="flex mt-4 p-5 pb-6 h-500 w-360 rounded-md bg-gradient-to-t from-indigo-400 to-violet-300 md:mt-0 md:h-796 lg:w-632  xl:justify-center xl:w-900 2xl:1024 invisible"
-                id="containerTableroSeleccionado">
+                id="tablero-seleccionado__container">
 
                 <div class="h-32 w-360 mt-4 flex flex-wrap lg:mt-0 lg:w-500 opacity-0 transition ease-in-out delay-300"
-                    id="containerTareas">
-                    <h2 class="h-5 mb-8 w-80 text-2xl text-slate-100 lg:mt-1 lg:w-500" id="tituloTablero"></h2>
+                    id="tareas__container">
+                    <h2 class="h-5 mb-8 w-80 text-2xl text-slate-100 lg:mt-1 lg:w-500" id="tablero-seleccionado__titulo"></h2>
                     <div class="flex justify-center gap-2 mt-6 h-12 lg:mt-0">
                         <input
                             class="w-280 h-9 text-lg text-gray-800 border-slate-100 border-b-2  placeholder:text-slate-100 placeholder:opacity-70 focus:outline-none bg-transparent lg:w-460 "
-                            id="inputTarea" type="text" maxlength="70" placeholder="Agregar una tarea">
+                            id="tarea__input" type="text" maxlength="70" placeholder="Agregar una tarea">
 
                         <button
                             class=" w-9 h-9 rounded-md font-bold text-violet-300  bg-slate-100  border-slate-100 border-2 active:scale-90 duration-75"
-                            id="btnTarea">+</button>
+                            id="tarea__btn">+</button>
                     </div>
                     <div class="w-80 flex items-center gap-4 mb-4 mt-5 text-white xl:mt-2 xl:w-500">
                         <p class="text-xl">Filtros -</p>
                         <button
                             class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75"
-                            id="btnFiltroTodas"><img class="h-5" src="./img/infinito.png" alt=""></button>
+                            id="filtro-todas__btn"><img class="h-5" src="./img/infinito.png" alt=""></button>
                         <button
                             class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75"
-                            id="btnFiltroPendientes"><img class="h-5" src="./img/pendiente-violet.png" alt=""></button>
+                            id="filtro-pendientes__btn"><img class="h-5" src="./img/pendiente-violet.png" alt=""></button>
                         <button
                             class="rounded-2xl border-2 border-slate-100 p-1 text-violet-300 bg-slate-100 opacity-70 focus:opacity-100 active:scale-90 duration-75"
-                            id="btnFiltroRealizadas"><img class="h-5" src="./img/realizada-violet.png" alt=""></button>
+                            id="filtro-realizadas__btn"><img class="h-5" src="./img/realizada-violet.png" alt=""></button>
                     </div>
                     <div class="  h-80 flex justify-center flex-col lg:w-500 lg:h-632">
-                        <ul class="h-80 w-80 mb-4 overflow-y-scroll lg:w-500 lg:h-570 " id="listaTareas">
+                        <ul class="h-80 w-80 mb-4 overflow-y-scroll lg:w-500 lg:h-570 " id="tareas__lista">
                         </ul>
 
                         
-                        <div class="relative z-10 hidden" id="modal-bg" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                            <!--
-                                Background backdrop, show/hide based on modal state.
-                            
-                                Entering: "ease-out duration-300"
-                                    From: "opacity-0"
-                                    To: "opacity-100"
-                                Leaving: "ease-in duration-200"
-                                    From: "opacity-100"
-                                    To: "opacity-0"
-                            -->   
+                        <div class="relative z-10 hidden" id="agendar-modal__bg" aria-labelledby="modal-title" role="dialog" aria-modal="true">  
                             <div class="fixed inset-0 bg-zinc-600 bg-opacity-40 transition-opacity"></div>
 
                             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 ease-out duration-300 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" id="modal">
-                                    <!--
-                                    Modal panel, show/hide based on modal state.
-
-                                    Entering: "ease-out duration-300"
-                                        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                        To: "opacity-100 translate-y-0 sm:scale-100"
-                                    Leaving: "ease-in duration-200"
-                                        From: "opacity-100 translate-y-0 sm:scale-100"
-                                        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                    -->
+                                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 ease-out duration-300 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" id="agendar-modal">
                                     <div class="relative transform overflow-hidden rounded-md bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                                         <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                                             <div class="sm:flex sm:items-start">
                                                 <div class="mt-3 text-center sm:mt-0 sm:text-left">
-                                                    <h3 class="font-semibold text-lg leading-6 text-gray-900" id="modal-title">Agendar tarea</h3>
-                                                    <input class="mt-4 w-36 text-lg focus:outline-none" type="date" id="inputFecha">
+                                                    <h3 class="font-semibold text-lg leading-6 text-gray-900">Agendar tarea</h3>
+                                                    <p class="mt-4 text-lg hidden" id="fecha__texto">Prueba</p>
+                                                    <input class="mt-4 w-36 text-lg focus:outline-none" type="date" id="fecha__input"> 
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                            <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 sm:ml-3 sm:w-auto active:scale-90 duration-75" id="btnAgendar">Agendar</button>
-                                            <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-slate-100 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm hover:bg-slate-200 sm:mt-0 sm:w-auto  active:scale-90 duration-75" id="btnCancelar">Cancelar</button>
+                                            <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 sm:ml-3 sm:w-auto active:scale-90 duration-75" id="agendar-modal-aceptar__btn">Agendar</button>
+                                            <button type="button" class="inline-flex w-full justify-center rounded-md bg-indigo-300 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 sm:ml-3 sm:w-auto active:scale-90 duration-75 hidden" id="agendar-modal-reagendar__btn">Reagendar</button>
+                                            <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-slate-100 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm hover:bg-slate-200 sm:mt-0 sm:w-auto  active:scale-90 duration-75" id="agendar-modal-cancelar__btn">Cancelar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +106,7 @@
                 </div>
 
                 <div class="hidden ml-9 xl:flex xl:flex-col items-center w-300 opacity-0 transition ease-in-out delay-300"
-                    id="containerNotas">
+                    id="lateral__container">
                     <div class="bg-white w-300 rounded-md">
                         <div class="p-5 flex items-center justify-between">
                             <p class="text-lg" id="fecha-actual"></p>
