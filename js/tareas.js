@@ -118,6 +118,7 @@ function crearTareaDOM(objetoTarea) {
             inputFecha.classList.add('hidden');
             pFecha.classList.remove('hidden');
             pFecha.innerText = `Tarea programada para el día ${fecha}`
+            inputFecha.value = ''
         }
         else {
             btnReagendarModal.classList.add('hidden');
